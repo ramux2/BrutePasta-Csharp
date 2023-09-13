@@ -1,10 +1,13 @@
-﻿namespace BrutePasta.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BrutePasta.Models;
 
 public class Adress
 {
+    [Key]
+    private string _cep;
     private string _streetName;
     private string _number;
-    private string _cep;
 
     public string StreetName
     {

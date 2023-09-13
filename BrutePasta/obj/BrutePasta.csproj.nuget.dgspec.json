@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\Guilherme\\Documents\\Projetos\\BrutePasta2.0\\BrutePasta\\BrutePasta.csproj": {}
+    "C:\\Users\\A477016\\OneDrive - Volvo Group\\Faculdade\\Dev. Software\\BrutePasta-Csharp\\BrutePasta\\BrutePasta.csproj": {}
   },
   "projects": {
-    "c:\\Users\\Guilherme\\Documents\\Projetos\\BrutePasta2.0\\BrutePasta\\BrutePasta.csproj": {
+    "C:\\Users\\A477016\\OneDrive - Volvo Group\\Faculdade\\Dev. Software\\BrutePasta-Csharp\\BrutePasta\\BrutePasta.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Guilherme\\Documents\\Projetos\\BrutePasta2.0\\BrutePasta\\BrutePasta.csproj",
+        "projectUniqueName": "C:\\Users\\A477016\\OneDrive - Volvo Group\\Faculdade\\Dev. Software\\BrutePasta-Csharp\\BrutePasta\\BrutePasta.csproj",
         "projectName": "BrutePasta",
-        "projectPath": "c:\\Users\\Guilherme\\Documents\\Projetos\\BrutePasta2.0\\BrutePasta\\BrutePasta.csproj",
-        "packagesPath": "C:\\Users\\Guilherme\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Guilherme\\Documents\\Projetos\\BrutePasta2.0\\BrutePasta\\obj\\",
+        "projectPath": "C:\\Users\\A477016\\OneDrive - Volvo Group\\Faculdade\\Dev. Software\\BrutePasta-Csharp\\BrutePasta\\BrutePasta.csproj",
+        "packagesPath": "C:\\Users\\A477016\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\A477016\\OneDrive - Volvo Group\\Faculdade\\Dev. Software\\BrutePasta-Csharp\\BrutePasta\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Guilherme\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\A477016\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

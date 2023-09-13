@@ -6,7 +6,7 @@ public class Motoboy
 {
     private string _name;
     private float _orderTax;
-    private List<Order> _orders;
+    private Vehicle _vehicle;
 
     public string Name
     {
@@ -20,15 +20,14 @@ public class Motoboy
         set => _orderTax = value;
     }
 
-    public List<Order> Orders
+    public Vehicle Vehicle
     {
-        get => _orders;
-        set => _orders = value;
+        get => _vehicle;
+        set => _vehicle = value;
     }
 
     public Motoboy()
     {
-        _orders = new List<Order>();
         _name = string.Empty;
     }
 }

@@ -5,7 +5,9 @@ public class Order
 {
     private Item _items;
     private Client _client;
+    private Motoboy _motoboy;
     private float _totalValue;
+    
 
     public Item Items
     {
@@ -17,6 +19,12 @@ public class Order
     {
         get => _client;
         set => _client = value;
+    }
+
+    public Motoboy Motoboy
+    {
+        get => _motoboy;
+        set => _motoboy = value;
     }
 
     public float TotalValue
@@ -37,4 +45,6 @@ public class Order
         _items = item;
         _totalValue = totalValue;
     }
+
+    // Sortear entregador
 }

@@ -1,12 +1,14 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace BrutePasta.Models;
 
 public class Client
 {
-    private string _name;
+    [Key]
     private string _cpf;
+    private string _name;
     private Adress _adress;
     private string _phoneNumber;
-    private List<Order> _orders;
 
     public string Name
     {
@@ -27,12 +29,6 @@ public class Client
     {
         get => _phoneNumber;
         set => _phoneNumber = value;
-    }
-
-    public List<Order> Orders
-    {
-        get => _orders;
-        set => _orders = value;
     }
 
     public Client()

@@ -3,10 +3,9 @@ namespace BrutePasta.Models;
 
 public class Item
 {
-    private Product _product;
+    private Product? _product;
     private int _quantity;
 
-    [Key]
 
     public Product Product
     {
