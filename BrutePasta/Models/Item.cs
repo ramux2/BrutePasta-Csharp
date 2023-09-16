@@ -1,11 +1,19 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace BrutePasta.Models;
 
 public class Item
 {
-    private Product? _product;
+    [Key]
+    private int _itemId;
     private int _quantity;
+    private Product? _product;
 
+    public int ItemId
+    {
+        get => _itemId;
+        set => _itemId = value;
+    }
 
     public Product Product
     {
@@ -23,9 +31,15 @@ public class Item
     {
         _product = null;
     }
-    public Item(Product product, int quantity)
+    public Item(int itemId, Product product, int quantity)
     {
+        _itemId = itemId;
         _product = product;
         _quantity = quantity;
+    }
+
+    public static float calculateSubtotal(Item item, Product product)
+    {
+        return product.Price * item.Quantity;
     }
 }

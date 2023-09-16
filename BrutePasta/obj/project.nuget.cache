@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "63vkEvr7dq9GLf73JxFP55KPEtcs533UyIo8abNY7G4SCYObDbQXS1/zA5Pwrvv5p5rAG4BIa3+VvKH+IXKhUA==",
+  "dgSpecHash": "wKq6fxn3mHfvtLFhSi2I8m0OcyGnEKqj1OczCLEWB4fvjjOBhHhDEjBiNx3QGT2+016Cxc/De+GfZ51eI2kZeQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\A477016\\OneDrive - Volvo Group\\Faculdade\\Dev. Software\\BrutePasta-Csharp\\BrutePasta\\BrutePasta.csproj",
+  "projectFilePath": "c:\\Users\\A477016\\OneDrive - Volvo Group\\Faculdade\\Dev. Software\\BrutePasta-Csharp\\BrutePasta\\BrutePasta.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\A477016\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.10\\microsoft.aspnetcore.openapi.7.0.10.nupkg.sha512",
     "C:\\Users\\A477016\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.10\\microsoft.entityframeworkcore.7.0.10.nupkg.sha512",

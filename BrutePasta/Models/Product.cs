@@ -6,6 +6,7 @@ public class Product
     private int _qtyAvailable;
     private float _price;
     private string _description;
+    private ProductType _productType;
 
     public string Name
     {
@@ -27,6 +28,12 @@ public class Product
     {
         get => _description;
         set => _description = value;
+    }
+
+    public ProductType ProductType
+    {
+        get => _productType;
+        set => _productType = value;
     }
 
     public Product()

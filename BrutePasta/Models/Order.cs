@@ -1,13 +1,20 @@
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Routing.Constraints;
 
 namespace BrutePasta.Models;
 public class Order
 {
+    private int _orderId;
     private Item _items;
     private Client _client;
     private Motoboy _motoboy;
     private float _totalValue;
     
+    public int OrderId
+    {
+        get => _orderId;
+        set => _orderId = value;
+    }
 
     public Item Items
     {
@@ -39,12 +46,27 @@ public class Order
         _client = null;
     }
 
-    public Order(Client client, Item item, float totalValue)
+    public Order(int orderId, Client client, Item item, float totalValue)
     {
+        _orderId = orderId;
         _client = client;
         _items = item;
         _totalValue = totalValue;
     }
 
-    // Sortear entregador
+    public static float calculateSubtotal(Item item, Product product)
+    {
+        return product.Price * item.Quantity;
+    }
+
+    public static float calculaTotal(List<Item> items)
+    {
+        float total = 0;
+        foreach (Item item in items)
+        {
+            total += calculateSubtotal(item, item.Product);
+        }
+        total += 20;
+        return total;
+    }
 }

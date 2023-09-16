@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\A477016\\OneDrive - Volvo Group\\Faculdade\\Dev. Software\\BrutePasta-Csharp\\BrutePasta\\BrutePasta.csproj": {}
+    "c:\\Users\\A477016\\OneDrive - Volvo Group\\Faculdade\\Dev. Software\\BrutePasta-Csharp\\BrutePasta\\BrutePasta.csproj": {}
   },
   "projects": {
-    "C:\\Users\\A477016\\OneDrive - Volvo Group\\Faculdade\\Dev. Software\\BrutePasta-Csharp\\BrutePasta\\BrutePasta.csproj": {
+    "c:\\Users\\A477016\\OneDrive - Volvo Group\\Faculdade\\Dev. Software\\BrutePasta-Csharp\\BrutePasta\\BrutePasta.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\A477016\\OneDrive - Volvo Group\\Faculdade\\Dev. Software\\BrutePasta-Csharp\\BrutePasta\\BrutePasta.csproj",
+        "projectUniqueName": "c:\\Users\\A477016\\OneDrive - Volvo Group\\Faculdade\\Dev. Software\\BrutePasta-Csharp\\BrutePasta\\BrutePasta.csproj",
         "projectName": "BrutePasta",
-        "projectPath": "C:\\Users\\A477016\\OneDrive - Volvo Group\\Faculdade\\Dev. Software\\BrutePasta-Csharp\\BrutePasta\\BrutePasta.csproj",
+        "projectPath": "c:\\Users\\A477016\\OneDrive - Volvo Group\\Faculdade\\Dev. Software\\BrutePasta-Csharp\\BrutePasta\\BrutePasta.csproj",
         "packagesPath": "C:\\Users\\A477016\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\A477016\\OneDrive - Volvo Group\\Faculdade\\Dev. Software\\BrutePasta-Csharp\\BrutePasta\\obj\\",
+        "outputPath": "c:\\Users\\A477016\\OneDrive - Volvo Group\\Faculdade\\Dev. Software\\BrutePasta-Csharp\\BrutePasta\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\A477016\\AppData\\Roaming\\NuGet\\NuGet.Config"
