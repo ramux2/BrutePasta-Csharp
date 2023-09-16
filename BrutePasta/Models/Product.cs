@@ -1,12 +1,22 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace BrutePasta.Models;
 
 public class Product
 {
+    [Key]
+    private int _productId;
     private string _name;
     private int _qtyAvailable;
     private float _price;
     private string _description;
     private ProductType _productType;
+
+    public int ProductId
+    {
+        get => _productId;
+        set => _productId = value;
+    }
 
     public string Name
     {
@@ -41,8 +51,9 @@ public class Product
         _name = string.Empty;
         _description = string.Empty;
     }
-    public Product(string name, int qtyAvailable, float price)
+    public Product(int productId, string name, int qtyAvailable, float price)
     {
+        _productId = productId;
         _name = name;
         _qtyAvailable = qtyAvailable;
         _price = price;

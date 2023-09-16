@@ -70,3 +70,13 @@ c:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Cshar
 c:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Csharp\BrutePasta\obj\Debug\net7.0\BrutePasta.pdb
 c:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Csharp\BrutePasta\obj\Debug\net7.0\BrutePasta.genruntimeconfig.cache
 c:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Csharp\BrutePasta\obj\Debug\net7.0\ref\BrutePasta.dll
+C:\Users\Guilherme\Documents\Projetos\BrutePasta2.0\BrutePasta\bin\Debug\net7.0\Humanizer.dll
+C:\Users\Guilherme\Documents\Projetos\BrutePasta2.0\BrutePasta\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\Guilherme\Documents\Projetos\BrutePasta2.0\BrutePasta\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\Guilherme\Documents\Projetos\BrutePasta2.0\BrutePasta\bin\Debug\net7.0\dotnet-ef.dll
+C:\Users\Guilherme\Documents\Projetos\BrutePasta2.0\BrutePasta\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\Guilherme\Documents\Projetos\BrutePasta2.0\BrutePasta\bin\Debug\net7.0\Mono.TextTemplating.dll
+C:\Users\Guilherme\Documents\Projetos\BrutePasta2.0\BrutePasta\bin\Debug\net7.0\MySqlConnector.dll
+C:\Users\Guilherme\Documents\Projetos\BrutePasta2.0\BrutePasta\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\Guilherme\Documents\Projetos\BrutePasta2.0\BrutePasta\bin\Debug\net7.0\Pomelo.EntityFrameworkCore.MySql.dll
+C:\Users\Guilherme\Documents\Projetos\BrutePasta2.0\BrutePasta\bin\Debug\net7.0\System.CodeDom.dll

@@ -1,13 +1,14 @@
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Routing.Constraints;
+using System.ComponentModel.DataAnnotations;
 
 namespace BrutePasta.Models;
 public class Order
 {
+    [Key]
     private int _orderId;
-    private Item _items;
+    private List<Item> _items;
     private Client _client;
     private Motoboy _motoboy;
+    private DateTime _paymentDate;
     private float _totalValue;
     
     public int OrderId
@@ -16,7 +17,7 @@ public class Order
         set => _orderId = value;
     }
 
-    public Item Items
+    public List<Item> Items
     {
         get => _items;
         set => _items = value;
@@ -33,6 +34,11 @@ public class Order
         get => _motoboy;
         set => _motoboy = value;
     }
+    public DateTime PaymentDate
+    {
+        get => _paymentDate;
+        set => _paymentDate = value;
+    }
 
     public float TotalValue
     {
@@ -46,17 +52,19 @@ public class Order
         _client = null;
     }
 
-    public Order(int orderId, Client client, Item item, float totalValue)
+    public Order(int orderId, Client client, List<Item> items, Motoboy motoboy, DateTime paymentDate, float totalValue)
     {
         _orderId = orderId;
         _client = client;
-        _items = item;
+        _items = items;
+        _paymentDate = paymentDate;
+        _motoboy = motoboy;
         _totalValue = totalValue;
     }
 
-    public static float calculateSubtotal(Item item, Product product)
+    public static float calculateSubtotal(Item item)
     {
-        return product.Price * item.Quantity;
+        return item.Product.Price * item.Quantity;
     }
 
     public static float calculaTotal(List<Item> items)
@@ -64,7 +72,7 @@ public class Order
         float total = 0;
         foreach (Item item in items)
         {
-            total += calculateSubtotal(item, item.Product);
+            total += calculateSubtotal(item);
         }
         total += 20;
         return total;

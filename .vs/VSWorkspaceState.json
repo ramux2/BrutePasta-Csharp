@@ -1,8 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\BrutePasta"
+    "\\BrutePasta",
+    "\\BrutePasta\\Controllers",
+    "\\BrutePasta\\Data",
+    "\\BrutePasta\\Models"
   ],
-  "SelectedNode": "\\BrutePasta\\Program.cs",
+  "SelectedNode": "\\BrutePasta\\Models\\Adress.cs",
   "PreviewInSolutionExplorer": false
 }

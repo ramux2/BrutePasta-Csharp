@@ -1,11 +1,19 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 public class Vehicle
 {
+    [Key]
+    private int _vehicleId;
     private string _brand;
     private string _model;
     private string _licensePlate;
 
+    public int VehicleId
+    {
+        get => _vehicleId;
+        set => _vehicleId = value;
+    }
 
     public string Brand
     {

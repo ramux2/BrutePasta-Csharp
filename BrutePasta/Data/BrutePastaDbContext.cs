@@ -12,6 +12,11 @@ public class BrutePastaDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        // optionsBuilder.UseMySQL()
+        if (!optionsBuilder.IsConfigured)
+        {
+            string connectionString = "Server=localhost; User Id=root; Password=1234; Database=treinaweb";
+            optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+  
+        }
     }
 }

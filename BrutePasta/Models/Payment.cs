@@ -3,10 +3,17 @@
 namespace BrutePasta.Models;
 public class Payment
 {
+    [Key]
+    private int _paymentId;
     private int _orderId;
     private float _value;
-    private DateTime _paymentDate;
     private PaymentMethod _paymentMethod;
+
+    public int PaymentId
+    {
+        get => _paymentId;
+        set => _paymentId = value;
+    }
 
     public int OrderId
     {
@@ -20,12 +27,6 @@ public class Payment
         set => _value = value;
     }
 
-    public DateTime PaymentDate
-    {
-        get => _paymentDate;
-        set => _paymentDate = value;
-    }
-
     public PaymentMethod PaymentMethod
     {
         get => _paymentMethod;
@@ -37,11 +38,11 @@ public class Payment
         _paymentMethod = null;
     }
 
-    public Payment(int orderId, float value, DateTime paymentDate, PaymentMethod paymentMethod)
+    public Payment(int paymentId, int orderId, float value, PaymentMethod paymentMethod)
     {
+        _paymentId = paymentId;
         _orderId = orderId;
         _value = value;
-        _paymentDate = paymentDate;
         _paymentMethod = paymentMethod;
     }
 }

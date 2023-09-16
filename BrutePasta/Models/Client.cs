@@ -5,10 +5,17 @@ namespace BrutePasta.Models;
 public class Client
 {
     [Key]
+    private int _clientId;
     private string _cpf;
     private string _name;
-    private Adress _adress;
+    private Address _address;
     private string _phoneNumber;
+
+    public int ClientId
+    {
+        get => _clientId; 
+        set => _clientId = value;
+    }
 
     public string Name
     {
@@ -20,10 +27,10 @@ public class Client
         get => _cpf;
         set => _cpf = value;
     }
-    public Adress Adress
+    public Address Adress
     {
-        get => _adress;
-        set => _adress = value;
+        get => _address;
+        set => _address = value;
     }
     public string PhoneNumber
     {
@@ -37,11 +44,12 @@ public class Client
         _cpf = string.Empty;
         _phoneNumber = string.Empty;
     }
-    public Client(string name, string cpf, Adress adress, string phoneNumber)
+    public Client(int clientId, string name, string cpf, Address address, string phoneNumber)
     {
+        _clientId = clientId;
         _name = name;
         _cpf = cpf;
-        _adress = adress;
+        _address = address;
         _phoneNumber = phoneNumber;
     }
 

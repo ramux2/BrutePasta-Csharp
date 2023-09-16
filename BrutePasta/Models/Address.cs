@@ -2,9 +2,10 @@
 
 namespace BrutePasta.Models;
 
-public class Adress
+public class Address
 {
     [Key]
+    private int _addressId;
     private string _cep;
     private string _streetName;
     private string _number;
@@ -13,6 +14,12 @@ public class Adress
     {
         get => _streetName;
         set => _streetName = value;
+    }
+
+    public int AddressId
+    {
+        get => _addressId;
+        set => _addressId = value;
     }
 
     public string Number
@@ -27,14 +34,15 @@ public class Adress
         set => _cep = value;
     }
 
-    public Adress()
+    public Address()
     {
         _streetName = string.Empty;
         _number = string.Empty;
         _cep = string.Empty;
     }
-    public Adress(string streetName, string number, string cep)
+    public Address(int addressId, string streetName, string number, string cep)
     {
+        _addressId = addressId;
         _streetName = streetName;
         _number = number;
         _cep = cep;

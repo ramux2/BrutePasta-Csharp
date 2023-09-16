@@ -5,10 +5,17 @@ namespace BrutePasta.Models;
 public class Motoboy
 {
     [Key]
+    private int _motoboyId;
     private string _cpf;
     private string _name;
     private float _orderTax;
     private Vehicle _vehicle;
+
+    public int MotoboyId
+    {
+        get => _motoboyId;
+        set => _motoboyId = value;
+    }
 
     public string Cpf
     {
@@ -40,8 +47,9 @@ public class Motoboy
         _name = string.Empty;
     }
 
-    public Motoboy(string cpf, string name, float orderTax, Vehicle vehicle)
+    public Motoboy(int motoboyId, string cpf, string name, float orderTax, Vehicle vehicle)
     {
+        _motoboyId = motoboyId;
         _cpf = cpf;
         _name = name;
         _orderTax = orderTax;
