@@ -13,7 +13,7 @@ public class AdressController : ControllerBase
         _logger = logger;
     }
 
-    private static List<Adress> adresses = new();
+    private static List<Address> adresses = new();
 
     [HttpGet()]
     [Route("get")]
@@ -24,7 +24,7 @@ public class AdressController : ControllerBase
 
     [HttpPost]
     [Route("insert")]
-    public IActionResult Insert(Adress adress)
+    public IActionResult Insert(Address adress)
     {
         adresses.Add(adress);
         return Created("", adress);

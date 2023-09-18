@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BrutePasta.Models;
+using BrutePasta.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace BrutePasta.Controllers;
 
@@ -7,37 +9,49 @@ namespace BrutePasta.Controllers;
 [Route("[controller]")]
 public class ClientController : ControllerBase
 {
+    private BrutePastaDbContext _context;
     private readonly ILogger<ClientController> _logger;
     public ClientController(ILogger<ClientController> logger)
     {
         _logger = logger;
     }
 
-    private static List<Client> clients = new();
+    public ClientController(BrutePastaDbContext context)
+    {
+        _context = context;
+    }
 
     [HttpGet()]
     [Route("get")]
-    public IActionResult Get()
+    public async Task<ActionResult<IEnumerable<Client>>> Get()
     {
-        return Ok(clients);
+        if (_context.Client is null)
+            return NotFound();
+        return await _context.Client.ToListAsync();
     }
 
     [HttpGet()]
     [Route("search/{cpf}")]
-    public IActionResult Search([FromRoute] string cpf)
+    public async Task<ActionResult<Client>> Search([FromRoute] string cpf)
     {
-        Client client = clients.Find(x => x.Cpf == cpf);
-        if (client is not null)
-            return Ok(client);
-        else
+        if (_context.Client is null)
             return NotFound();
+        var client = await _context.Client.FindAsync(cpf);
+        if (client is null)
+            return NotFound();
+        return client;
     }
 
     [HttpPost]
     [Route("insert")]
-    public IActionResult Insert(Client client)
+    public async Task<ActionResult<Client>> Insert(Client client)
     {
-        clients.Add(client);
+        if (!Client.IsCpf(client.Cpf))
+            return BadRequest("CPF inválido!");
+
+        _context.Client.Add(client);
+        await _context.SaveChangesAsync();
+
         return Created("", client);
     }
 }

@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using BrutePasta.Models;
+using BrutePasta.Data;
 
 namespace BrutePasta.Controllers;
 
@@ -7,37 +9,49 @@ namespace BrutePasta.Controllers;
 [Route("[controller]")]
 public class VehicleController : ControllerBase
 {
+    private BrutePastaDbContext? _context;
     private readonly ILogger<VehicleController> _logger;
     public VehicleController(ILogger<VehicleController> logger)
     {
         _logger = logger;
     }
-
-    private static List<Vehicle> vehicles = new();
+    
+    public VehicleController(BrutePastaDbContext context) 
+    {
+        _context = context;
+    }
 
     [HttpGet()]
     [Route("get")]
-    public IActionResult Get()
+    public async Task<ActionResult<IEnumerable<Vehicle>>> Get()
     {
-        return Ok(vehicles);
+        if (_context.Vehicle is null) 
+            return NotFound();
+        return await _context.Vehicle.ToListAsync();
     }
 
     [HttpGet()]
     [Route("search/{licensePlate}")]
-    public IActionResult Search([FromRoute] string licensePlate)
+    public async Task<ActionResult<Vehicle>> Search([FromRoute] string licensePlate)
     {
-        Vehicle vehicle = vehicles.Find(x => x.LicensePlate == licensePlate);
-        if (vehicle is not null)
-            return Ok(vehicle);
-        else
+        if(_context.Vehicle is null)
             return NotFound();
+        var vehicle = await _context.Vehicle.FindAsync(licensePlate);
+        if (vehicle is null)
+            return NotFound();
+        return vehicle;
     }
 
     [HttpPost]
     [Route("insert")]
-    public IActionResult Insert(Vehicle vehicle)
+    public async Task<ActionResult<Vehicle>> Insert(Vehicle vehicle)
     {
-        vehicles.Add(vehicle);
-        return Created("", vehicle);
+        if (!Vehicle.PlateValidation(vehicle.LicensePlate))
+            return BadRequest("Placa inválida!");
+
+        _context.Vehicle.Add(vehicle);
+        await _context.SaveChangesAsync();
+
+        return Created("GetVehicle", vehicle);
     }
 }

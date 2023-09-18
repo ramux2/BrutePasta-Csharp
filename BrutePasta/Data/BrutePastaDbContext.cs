@@ -4,10 +4,16 @@ using Microsoft.EntityFrameworkCore;
 namespace BrutePasta.Data;
 public class BrutePastaDbContext : DbContext
 {
-    DbSet<Client> Client
+    public DbSet<Client>? Client
     {
         get => Client;
         set => Client = value;
+    }
+
+    public DbSet<Vehicle>? Vehicle
+    {
+        get => Vehicle;
+        set => Vehicle = value;
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
