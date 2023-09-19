@@ -9,7 +9,8 @@ public class Motoboy
     private string _cpf;
     private string _name;
     private float _orderTax;
-    private Vehicle _vehicle;
+    private int _vehicleId;
+    private Vehicle? _vehicle;
 
     public int MotoboyId
     {
@@ -35,7 +36,13 @@ public class Motoboy
         set => _orderTax = value;
     }
 
-    public Vehicle Vehicle
+    public int VehicleId
+    {
+        get => _vehicleId;
+        set => _vehicleId = value;
+    }
+
+    public Vehicle? Vehicle
     {
         get => _vehicle;
         set => _vehicle = value;
@@ -47,12 +54,12 @@ public class Motoboy
         _name = string.Empty;
     }
 
-    public Motoboy(int motoboyId, string cpf, string name, float orderTax, Vehicle vehicle)
+    public Motoboy(int motoboyId, string cpf, string name, float orderTax, int vehicleId)
     {
         _motoboyId = motoboyId;
         _cpf = cpf;
         _name = name;
         _orderTax = orderTax;
-        _vehicle = vehicle;
+        _vehicleId = vehicleId;
     }
 }

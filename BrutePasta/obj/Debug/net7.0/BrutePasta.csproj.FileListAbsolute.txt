@@ -80,3 +80,13 @@ C:\Users\Guilherme\Documents\Projetos\BrutePasta2.0\BrutePasta\bin\Debug\net7.0\
 C:\Users\Guilherme\Documents\Projetos\BrutePasta2.0\BrutePasta\bin\Debug\net7.0\Newtonsoft.Json.dll
 C:\Users\Guilherme\Documents\Projetos\BrutePasta2.0\BrutePasta\bin\Debug\net7.0\Pomelo.EntityFrameworkCore.MySql.dll
 C:\Users\Guilherme\Documents\Projetos\BrutePasta2.0\BrutePasta\bin\Debug\net7.0\System.CodeDom.dll
+C:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Csharp\BrutePasta\bin\Debug\net7.0\Humanizer.dll
+C:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Csharp\BrutePasta\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Csharp\BrutePasta\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Csharp\BrutePasta\bin\Debug\net7.0\dotnet-ef.dll
+C:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Csharp\BrutePasta\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+C:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Csharp\BrutePasta\bin\Debug\net7.0\Mono.TextTemplating.dll
+C:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Csharp\BrutePasta\bin\Debug\net7.0\MySqlConnector.dll
+C:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Csharp\BrutePasta\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Csharp\BrutePasta\bin\Debug\net7.0\Pomelo.EntityFrameworkCore.MySql.dll
+C:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Csharp\BrutePasta\bin\Debug\net7.0\System.CodeDom.dll

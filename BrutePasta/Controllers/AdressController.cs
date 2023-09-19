@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BrutePasta.Models;
+using BrutePasta.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace BrutePasta.Controllers;
 
@@ -7,26 +9,33 @@ namespace BrutePasta.Controllers;
 [Route("[controller]")]
 public class AdressController : ControllerBase
 {
+    private BrutePastaDbContext _context;
     private readonly ILogger<AdressController> _logger;
     public AdressController(ILogger<AdressController> logger)
     {
         _logger = logger;
     }
 
-    private static List<Address> adresses = new();
+    public AdressController(BrutePastaDbContext context)
+    {
+        _context = context;
+    }
 
     [HttpGet()]
     [Route("get")]
-    public IActionResult Get()
+    public async Task<ActionResult<IEnumerable<Address>>> Get()
     {
-        return Ok(adresses);
+        if (_context.Address is null)
+            return NotFound();
+        return await _context.Address.ToListAsync();
     }
 
     [HttpPost]
     [Route("insert")]
-    public IActionResult Insert(Address adress)
+    public async Task<ActionResult<Address>> Insert(Address address)
     {
-        adresses.Add(adress);
-        return Created("", adress);
+        _context.Address.Add(address);
+        await _context.SaveChangesAsync();
+        return Created("", address);
     }
 }
