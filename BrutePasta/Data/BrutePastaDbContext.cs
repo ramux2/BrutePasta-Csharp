@@ -28,6 +28,12 @@ public class BrutePastaDbContext : DbContext
         set => Motoboy = value;
     }
 
+    public DbSet<Product>? Product
+    {
+        get => Product;
+        set => Product = value;
+    }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
