@@ -1,65 +1,25 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace BrutePasta.Models;
 
 public class Motoboy
 {
-    [Key]
-    private int _motoboyId;
-    private string _cpf;
-    private string _name;
-    private float _orderTax;
-    private int _vehicleId;
-    private Vehicle? _vehicle;
-
-    public int MotoboyId
-    {
-        get => _motoboyId;
-        set => _motoboyId = value;
-    }
-
-    public string Cpf
-    {
-        get => _cpf;
-        set => _cpf = value;
-    }
-
-    public string Name
-    {
-        get => _name;
-        set => _name = value;
-    }
-
-    public float OrderTax
-    {
-        get => _orderTax;
-        set => _orderTax = value;
-    }
-
-    public int VehicleId
-    {
-        get => _vehicleId;
-        set => _vehicleId = value;
-    }
-
-    public Vehicle? Vehicle
-    {
-        get => _vehicle;
-        set => _vehicle = value;
-    }
+    public int MotoboyId { get; set; }
+    public string Cpf { get; set; }
+    public string Name { get; set; }
+    public float OrderTax { get; set; }
+    public Vehicle? Vehicle { get; set; }
 
     public Motoboy()
     {
-        _cpf = string.Empty;
-        _name = string.Empty;
+        Cpf = string.Empty;
+        Name = string.Empty;
     }
 
-    public Motoboy(int motoboyId, string cpf, string name, float orderTax, int vehicleId)
+    public Motoboy(int motoboyId, string cpf, string name, float orderTax, Vehicle vehicle)
     {
-        _motoboyId = motoboyId;
-        _cpf = cpf;
-        _name = name;
-        _orderTax = orderTax;
-        _vehicleId = vehicleId;
+        MotoboyId = motoboyId;
+        Cpf = cpf;
+        Name = name;
+        OrderTax = orderTax;
+        Vehicle = vehicle;
     }
 }

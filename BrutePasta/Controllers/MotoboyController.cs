@@ -11,14 +11,10 @@ namespace BrutePasta.Controllers
     {
         private BrutePastaDbContext _context;
         private readonly ILogger<MotoboyController> _logger;
-        public MotoboyController(ILogger<MotoboyController> logger)
-        {
-            _logger = logger;
-        }
-
-        public MotoboyController(BrutePastaDbContext context)
+        public MotoboyController(BrutePastaDbContext context, ILogger<MotoboyController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [HttpGet()]
@@ -46,11 +42,25 @@ namespace BrutePasta.Controllers
         [Route("insert")]
         public async Task<ActionResult<Motoboy>> Insert(Motoboy motoboy)
         {
-            // Dar um get no Vehicle e depois associar o Vehicle com motoboy
+            // Obtenha o vehicleId do JSON de entrada
+            int vehicleId = motoboy.Vehicle?.VehicleId ?? 0; // Assumindo que o JSON possui um objeto Vehicle aninhado
+
+            // Verifique se o Vehicle com o vehicleId fornecido existe no banco de dados
+            Vehicle existingVehicle = await _context.Vehicle.FirstOrDefaultAsync(v => v.VehicleId == vehicleId);
+
+            /*if (!Vehicle.PlateValidation(vehicle.LicensePlate))
+                return BadRequest("Placa inválida!");*/
+
+            if (existingVehicle is null)
+                return BadRequest("Vehicle not found");
+
+            // O Vehicle existe, agora crie o Motoboy associando o Vehicle existente
+            motoboy.Vehicle = existingVehicle;
             _context.Motoboy.Add(motoboy);
             await _context.SaveChangesAsync();
 
             return Created("", motoboy);
+            
         }
     }
 }

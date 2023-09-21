@@ -1,56 +1,27 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace BrutePasta.Models;
 
 public class Client
 {
-    [Key]
-    private int _clientId;
-    private string _cpf;
-    private string _name;
-    private Address _address;
-    private string _phoneNumber;
+    public int ClientId { get; set; }
+    public string Cpf { get; set; }
+    public string Name { get; set; }
+    public Address Address { get; set; }
+    public string PhoneNumber { get; set; }
 
-    public int ClientId
-    {
-        get => _clientId; 
-        set => _clientId = value;
-    }
-
-    public string Name
-    {
-        get => _name;
-        set => _name = value;
-    }
-    public string Cpf
-    {
-        get => _cpf;
-        set => _cpf = value;
-    }
-    public Address Adress
-    {
-        get => _address;
-        set => _address = value;
-    }
-    public string PhoneNumber
-    {
-        get => _phoneNumber;
-        set => _phoneNumber = value;
-    }
 
     public Client()
     {
-        _name = string.Empty;
-        _cpf = string.Empty;
-        _phoneNumber = string.Empty;
+        Cpf = string.Empty;
+        Name = string.Empty;
+        PhoneNumber = string.Empty;
     }
     public Client(int clientId, string name, string cpf, Address address, string phoneNumber)
     {
-        _clientId = clientId;
-        _name = name;
-        _cpf = cpf;
-        _address = address;
-        _phoneNumber = phoneNumber;
+        ClientId = clientId;
+        Cpf = cpf;
+        Name = name;
+        Address = address;
+        PhoneNumber = phoneNumber;
     }
 
     public static bool IsCpf(string cpf)

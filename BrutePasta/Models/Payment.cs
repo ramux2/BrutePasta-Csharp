@@ -1,48 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace BrutePasta.Models;
+﻿namespace BrutePasta.Models;
 public class Payment
 {
-    [Key]
-    private int _paymentId;
-    private int _orderId;
-    private float _value;
-    private PaymentMethod _paymentMethod;
+    public int PaymentId { get; set; }
+    public int OrderId { get; set; }
+    public float Value { get; set; }
+    public PaymentMethod PaymentMethod { get; set; }
 
-    public int PaymentId
-    {
-        get => _paymentId;
-        set => _paymentId = value;
-    }
-
-    public int OrderId
-    {
-        get => _orderId;
-        set => _orderId = value;
-    }
-
-    public float Value
-    {
-        get => _value;
-        set => _value = value;
-    }
-
-    public PaymentMethod PaymentMethod
-    {
-        get => _paymentMethod;
-        set => _paymentMethod = value;
-    }
-
-    public Payment()
-    {
-        _paymentMethod = null;
-    }
+    public Payment() {}
 
     public Payment(int paymentId, int orderId, float value, PaymentMethod paymentMethod)
     {
-        _paymentId = paymentId;
-        _orderId = orderId;
-        _value = value;
-        _paymentMethod = paymentMethod;
+        PaymentId = paymentId;
+        OrderId = orderId;
+        Value = value;
+        PaymentMethod = paymentMethod;
     }
 }

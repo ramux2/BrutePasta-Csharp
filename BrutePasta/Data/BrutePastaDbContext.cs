@@ -4,52 +4,16 @@ using Microsoft.EntityFrameworkCore;
 namespace BrutePasta.Data;
 public class BrutePastaDbContext : DbContext
 {
-    public DbSet<Client>? Client
-    {
-        get => Client;
-        set => Client = value;
-    }
+    public BrutePastaDbContext(DbContextOptions<BrutePastaDbContext> options) : base(options) {}
 
-    public DbSet<Vehicle>? Vehicle
-    {
-        get => Vehicle;
-        set => Vehicle = value;
-    }
+    public DbSet<Address> Address { get; set; }
+    public DbSet<Client> Client { get; set; }
+    public DbSet<Motoboy> Motoboy { get; set; }
+    public DbSet<Vehicle> Vehicle {  get; set; }
+    public DbSet<Product> Product { get; set; }
+    public DbSet<ProductType> ProductType { get; set; }
+    public DbSet<Order> Order { get; set; }
+    public DbSet<Payment> Payment { get; set; }
+    public DbSet<PaymentMethod> PaymentMethod { get; set; }
 
-    public DbSet<Address>? Address
-    {
-        get => Address;
-        set => Address = value;
-    }
-
-    public DbSet<Motoboy>? Motoboy
-    {
-        get => Motoboy;
-        set => Motoboy = value;
-    }
-
-    public DbSet<Product>? Product
-    {
-        get => Product;
-        set => Product = value;
-    }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
-        {
-            string connectionString = "Server=localhost; User Id=root; Password=1234; Database=treinaweb";
-            optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-  
-        }
-    }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        // Configure your entity relationships here
-        modelBuilder.Entity<Motoboy>()
-            .HasOne(m => m.Vehicle)
-            .WithMany()
-            .HasForeignKey(m => m.VehicleId);
-    }
 }

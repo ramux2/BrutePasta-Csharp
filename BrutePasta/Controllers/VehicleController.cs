@@ -11,14 +11,10 @@ public class VehicleController : ControllerBase
 {
     private BrutePastaDbContext? _context;
     private readonly ILogger<VehicleController> _logger;
-    public VehicleController(ILogger<VehicleController> logger)
-    {
-        _logger = logger;
-    }
-    
-    public VehicleController(BrutePastaDbContext context) 
+    public VehicleController(BrutePastaDbContext context, ILogger<VehicleController> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     [HttpGet()]

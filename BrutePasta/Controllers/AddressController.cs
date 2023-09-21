@@ -7,16 +7,16 @@ namespace BrutePasta.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class AdressController : ControllerBase
+public class AddressController : ControllerBase
 {
     private BrutePastaDbContext _context;
-    private readonly ILogger<AdressController> _logger;
-    public AdressController(ILogger<AdressController> logger)
+    private readonly ILogger<AddressController> _logger;
+    public AddressController(ILogger<AddressController> logger)
     {
         _logger = logger;
     }
 
-    public AdressController(BrutePastaDbContext context)
+    public AddressController(BrutePastaDbContext context)
     {
         _context = context;
     }
