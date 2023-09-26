@@ -11,18 +11,14 @@ public class ClientController : ControllerBase
 {
     private BrutePastaDbContext _context;
     private readonly ILogger<ClientController> _logger;
-    public ClientController(ILogger<ClientController> logger)
+    public ClientController(BrutePastaDbContext context, ILogger<ClientController> logger)
     {
         _logger = logger;
-    }
-
-    public ClientController(BrutePastaDbContext context)
-    {
         _context = context;
     }
 
     [HttpGet()]
-    [Route("get")]
+    [Route("clients")]
     public async Task<ActionResult<IEnumerable<Client>>> Get()
     {
         if (_context.Client is null)
@@ -31,8 +27,8 @@ public class ClientController : ControllerBase
     }
 
     [HttpGet()]
-    [Route("search/{cpf}")]
-    public async Task<ActionResult<Client>> Search([FromRoute] string cpf)
+    [Route("client/{cpf}")]
+    public async Task<ActionResult<Client>> SearchCpf([FromRoute] string cpf)
     {
         if (_context.Client is null)
             return NotFound();
@@ -43,7 +39,7 @@ public class ClientController : ControllerBase
     }
 
     [HttpPost]
-    [Route("insert")]
+    [Route("client")]
     public async Task<ActionResult<Client>> Insert(Client client)
     {
         if (!Client.IsCpf(client.Cpf))

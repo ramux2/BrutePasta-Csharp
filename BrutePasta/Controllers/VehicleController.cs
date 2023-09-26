@@ -18,7 +18,7 @@ public class VehicleController : ControllerBase
     }
 
     [HttpGet()]
-    [Route("get")]
+    [Route("vehicles")]
     public async Task<ActionResult<IEnumerable<Vehicle>>> Get()
     {
         if (_context.Vehicle is null) 
@@ -27,7 +27,7 @@ public class VehicleController : ControllerBase
     }
 
     [HttpGet()]
-    [Route("search/{licensePlate}")]
+    [Route("vehicle/{licensePlate}")]
     public async Task<ActionResult<Vehicle>> Search([FromRoute] string licensePlate)
     {
         if(_context.Vehicle is null)
@@ -39,7 +39,7 @@ public class VehicleController : ControllerBase
     }
 
     [HttpPost]
-    [Route("insert")]
+    [Route("vehicle")]
     public async Task<ActionResult<Vehicle>> Insert(Vehicle vehicle)
     {
         if (!Vehicle.PlateValidation(vehicle.LicensePlate))
@@ -48,6 +48,6 @@ public class VehicleController : ControllerBase
         _context.Vehicle.Add(vehicle);
         await _context.SaveChangesAsync();
 
-        return Created("GetVehicle", vehicle);
+        return Created("", vehicle);
     }
 }

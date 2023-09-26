@@ -3,6 +3,7 @@ using System;
 using BrutePasta.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrutePasta.Migrations
 {
     [DbContext(typeof(BrutePastaDbContext))]
-    partial class BrutePastaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230925230928_AddPrimaryKey")]
+    partial class AddPrimaryKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -215,16 +218,14 @@ namespace BrutePasta.Migrations
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int>("PaymentId")
-                        .HasColumnType("int");
+                    b.Property<float>("TotalValue")
+                        .HasColumnType("float");
 
                     b.HasKey("RestaurantOrderId");
 
                     b.HasIndex("ClientId");
 
                     b.HasIndex("MotoboyId");
-
-                    b.HasIndex("PaymentId");
 
                     b.ToTable("RestaurantOrder");
                 });
@@ -310,7 +311,7 @@ namespace BrutePasta.Migrations
             modelBuilder.Entity("BrutePasta.Models.RestaurantOrder", b =>
                 {
                     b.HasOne("BrutePasta.Models.Client", "Client")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -321,17 +322,14 @@ namespace BrutePasta.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BrutePasta.Models.Payment", "Payment")
-                        .WithMany()
-                        .HasForeignKey("PaymentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Client");
 
                     b.Navigation("Motoboy");
+                });
 
-                    b.Navigation("Payment");
+            modelBuilder.Entity("BrutePasta.Models.Client", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("BrutePasta.Models.RestaurantOrder", b =>

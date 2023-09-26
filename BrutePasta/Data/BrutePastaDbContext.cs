@@ -12,7 +12,7 @@ public class BrutePastaDbContext : DbContext
     public DbSet<Vehicle> Vehicle {  get; set; }
     public DbSet<Product> Product { get; set; }
     public DbSet<ProductType> ProductType { get; set; }
-    public DbSet<Order> Order { get; set; }
+    public DbSet<RestaurantOrder> RestaurantOrder { get; set; }
     public DbSet<Payment> Payment { get; set; }
     public DbSet<PaymentMethod> PaymentMethod { get; set; }
 

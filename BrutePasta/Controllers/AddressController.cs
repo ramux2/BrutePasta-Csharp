@@ -11,18 +11,14 @@ public class AddressController : ControllerBase
 {
     private BrutePastaDbContext _context;
     private readonly ILogger<AddressController> _logger;
-    public AddressController(ILogger<AddressController> logger)
+    public AddressController(BrutePastaDbContext context, ILogger<AddressController> logger)
     {
         _logger = logger;
-    }
-
-    public AddressController(BrutePastaDbContext context)
-    {
         _context = context;
     }
 
     [HttpGet()]
-    [Route("get")]
+    [Route("addresses")]
     public async Task<ActionResult<IEnumerable<Address>>> Get()
     {
         if (_context.Address is null)
@@ -31,7 +27,7 @@ public class AddressController : ControllerBase
     }
 
     [HttpPost]
-    [Route("insert")]
+    [Route("address")]
     public async Task<ActionResult<Address>> Insert(Address address)
     {
         _context.Address.Add(address);

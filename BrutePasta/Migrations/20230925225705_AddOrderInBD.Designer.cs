@@ -3,6 +3,7 @@ using System;
 using BrutePasta.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrutePasta.Migrations
 {
     [DbContext(typeof(BrutePastaDbContext))]
-    partial class BrutePastaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230925225705_AddOrderInBD")]
+    partial class AddOrderInBD
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,20 +79,20 @@ namespace BrutePasta.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RestaurantOrderId")
-                        .HasColumnType("int");
-
                     b.HasKey("ItemId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("OrderId");
 
-                    b.HasIndex("RestaurantOrderId");
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Item");
                 });
@@ -119,6 +122,33 @@ namespace BrutePasta.Migrations
                     b.HasIndex("VehicleId");
 
                     b.ToTable("Motoboy");
+                });
+
+            modelBuilder.Entity("BrutePasta.Models.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MotoboyId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<float>("TotalValue")
+                        .HasColumnType("float");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("MotoboyId");
+
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("BrutePasta.Models.Payment", b =>
@@ -200,35 +230,6 @@ namespace BrutePasta.Migrations
                     b.ToTable("ProductType");
                 });
 
-            modelBuilder.Entity("BrutePasta.Models.RestaurantOrder", b =>
-                {
-                    b.Property<int>("RestaurantOrderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("ClientId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MotoboyId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("PaymentDate")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("PaymentId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RestaurantOrderId");
-
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("MotoboyId");
-
-                    b.HasIndex("PaymentId");
-
-                    b.ToTable("RestaurantOrder");
-                });
-
             modelBuilder.Entity("Vehicle", b =>
                 {
                     b.Property<int>("VehicleId")
@@ -265,13 +266,13 @@ namespace BrutePasta.Migrations
 
             modelBuilder.Entity("BrutePasta.Models.Item", b =>
                 {
+                    b.HasOne("BrutePasta.Models.Order", null)
+                        .WithMany("Items")
+                        .HasForeignKey("OrderId");
+
                     b.HasOne("BrutePasta.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId");
-
-                    b.HasOne("BrutePasta.Models.RestaurantOrder", null)
-                        .WithMany("Items")
-                        .HasForeignKey("RestaurantOrderId");
 
                     b.Navigation("Product");
                 });
@@ -283,6 +284,25 @@ namespace BrutePasta.Migrations
                         .HasForeignKey("VehicleId");
 
                     b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("BrutePasta.Models.Order", b =>
+                {
+                    b.HasOne("BrutePasta.Models.Client", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BrutePasta.Models.Motoboy", "Motoboy")
+                        .WithMany()
+                        .HasForeignKey("MotoboyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Motoboy");
                 });
 
             modelBuilder.Entity("BrutePasta.Models.Payment", b =>
@@ -307,34 +327,7 @@ namespace BrutePasta.Migrations
                     b.Navigation("ProductType");
                 });
 
-            modelBuilder.Entity("BrutePasta.Models.RestaurantOrder", b =>
-                {
-                    b.HasOne("BrutePasta.Models.Client", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BrutePasta.Models.Motoboy", "Motoboy")
-                        .WithMany()
-                        .HasForeignKey("MotoboyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BrutePasta.Models.Payment", "Payment")
-                        .WithMany()
-                        .HasForeignKey("PaymentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Client");
-
-                    b.Navigation("Motoboy");
-
-                    b.Navigation("Payment");
-                });
-
-            modelBuilder.Entity("BrutePasta.Models.RestaurantOrder", b =>
+            modelBuilder.Entity("BrutePasta.Models.Order", b =>
                 {
                     b.Navigation("Items");
                 });

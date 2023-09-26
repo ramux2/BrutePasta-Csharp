@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BrutePasta.Models;
+using Microsoft.EntityFrameworkCore;
+using BrutePasta.Data;
 
 namespace BrutePasta.Controllers;
 
@@ -7,26 +9,41 @@ namespace BrutePasta.Controllers;
 [Route("[controller]")]
 public class PaymentMethodController : ControllerBase
 {
+    private BrutePastaDbContext _context;
     private readonly ILogger<PaymentMethodController> _logger;
-    public PaymentMethodController(ILogger<PaymentMethodController> logger)
+    public PaymentMethodController(BrutePastaDbContext context, ILogger<PaymentMethodController> logger)
     {
         _logger = logger;
+        _context = context;
     }
 
-    private static List<PaymentMethod> paymentMethods = new();
+    [HttpGet()]
+    [Route("paymentMethods")]
+    public async Task<ActionResult<IEnumerable<PaymentMethod>>> Get()
+    {
+        if (_context.PaymentMethod is null)
+            return NotFound();
+        return await _context.PaymentMethod.ToListAsync();
+    }
 
     [HttpGet()]
-    [Route("get")]
-    public IActionResult Get()
+    [Route("paymentMethod/{name}")]
+    public async Task<ActionResult<PaymentMethod>> SearchName([FromRoute] string name)
     {
-        return Ok(paymentMethods);
+        if (_context.PaymentMethod is null)
+            return NotFound();
+        var paymentMethod = await _context.PaymentMethod.FindAsync(name);
+        if (paymentMethod is null)
+            return NotFound();
+        return paymentMethod;
     }
 
     [HttpPost]
-    [Route("insert")]
-    public IActionResult Insert(PaymentMethod paymentMethod)
+    [Route("paymentMethod")]
+    public async Task<ActionResult<PaymentMethod>> Insert(PaymentMethod paymentMethod)
     {
-        paymentMethods.Add(paymentMethod);
+        _context.PaymentMethod.Add(paymentMethod);
+        await _context.SaveChangesAsync();
         return Created("", paymentMethod);
     }
 }

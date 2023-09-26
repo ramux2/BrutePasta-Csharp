@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BrutePasta.Models;
+using BrutePasta.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace BrutePasta.Controllers;
 
@@ -7,26 +9,41 @@ namespace BrutePasta.Controllers;
 [Route("[controller]")]
 public class ProductTypeController : ControllerBase
 {
+    private BrutePastaDbContext _context;
     private readonly ILogger<ProductTypeController> _logger;
-    public ProductTypeController(ILogger<ProductTypeController> logger)
+    public ProductTypeController(BrutePastaDbContext context, ILogger<ProductTypeController> logger)
     {
         _logger = logger;
+        _context = context;
     }
 
-    private static List<ProductType> productTypes = new();
+    [HttpGet()]
+    [Route("productTypes")]
+    public async Task<ActionResult<IEnumerable<ProductType>>> Get()
+    {
+        if (_context.ProductType is null)
+            return NotFound();
+        return await _context.ProductType.ToListAsync();
+    }
 
     [HttpGet()]
-    [Route("get")]
-    public IActionResult Get()
+    [Route("productType/{name}")]
+    public async Task<ActionResult<ProductType>> SearchName([FromRoute] string name)
     {
-        return Ok(productTypes);
+        if (_context.ProductType is null)
+            return NotFound();
+        var productType = await _context.ProductType.FindAsync(name);
+        if (productType is null)
+            return NotFound();
+        return productType;
     }
 
     [HttpPost]
-    [Route("insert")]
-    public IActionResult Insert(ProductType productType)
+    [Route("productType")]
+    public async Task<ActionResult<ProductType>> Insert(ProductType productType)
     {
-        productTypes.Add(productType);
+        _context.ProductType.Add(productType);
+        await _context.SaveChangesAsync();
         return Created("", productType);
     }
 }

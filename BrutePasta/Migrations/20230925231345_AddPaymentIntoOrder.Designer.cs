@@ -3,6 +3,7 @@ using System;
 using BrutePasta.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrutePasta.Migrations
 {
     [DbContext(typeof(BrutePastaDbContext))]
-    partial class BrutePastaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230925231345_AddPaymentIntoOrder")]
+    partial class AddPaymentIntoOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -310,7 +313,7 @@ namespace BrutePasta.Migrations
             modelBuilder.Entity("BrutePasta.Models.RestaurantOrder", b =>
                 {
                     b.HasOne("BrutePasta.Models.Client", "Client")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -332,6 +335,11 @@ namespace BrutePasta.Migrations
                     b.Navigation("Motoboy");
 
                     b.Navigation("Payment");
+                });
+
+            modelBuilder.Entity("BrutePasta.Models.Client", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("BrutePasta.Models.RestaurantOrder", b =>

@@ -18,7 +18,7 @@ namespace BrutePasta.Controllers
         }
 
         [HttpGet()]
-        [Route("get")]
+        [Route("motoboys")]
         public async Task<ActionResult<IEnumerable<Motoboy>>> Get()
         {
             if (_context.Motoboy is null)
@@ -27,7 +27,7 @@ namespace BrutePasta.Controllers
         }
 
         [HttpGet()]
-        [Route("search/{cpf}")]
+        [Route("motoboy/{cpf}")]
         public async Task<ActionResult<Motoboy>> Search([FromRoute] string cpf)
         {
             if (_context.Motoboy is null)
@@ -39,7 +39,7 @@ namespace BrutePasta.Controllers
         }
 
         [HttpPost]
-        [Route("insert")]
+        [Route("motoboy")]
         public async Task<ActionResult<Motoboy>> Insert(Motoboy motoboy)
         {
             // Obtenha o vehicleId do JSON de entrada
