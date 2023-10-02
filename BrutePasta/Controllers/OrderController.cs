@@ -30,11 +30,18 @@ namespace BrutePasta.Controllers
         [Route("order")]
         public async Task<ActionResult<RestaurantOrder>> Insert(RestaurantOrder order)
         {
+            // Verifique se o Client já existe no banco de dados
+            string clientCpf = order.Client.Cpf; // Suponha que ClientId seja a chave primária do Client
+            Client existingClient = await _context.Client.FirstOrDefaultAsync(x => x.Cpf == clientCpf);
+
+            if (existingClient is null)
+                return BadRequest($"Client com CPF {clientCpf} não encontrado.");
+
+            order.Client = existingClient;
+            
             // Verifique se a lista de itens não é nula ou vazia
             if (order.Items == null || order.Items.Count == 0)
-            {
                 return BadRequest("A lista de itens está vazia.");
-            }
 
             // Itere sobre os itens do pedido e associe os produtos existentes
             foreach (var item in order.Items)
@@ -43,51 +50,24 @@ namespace BrutePasta.Controllers
                 if (item.Product != null)
                 {
                     // Obtenha o Produto existente pelo ID
-                    int productId = item.Product.ProductId; // Suponha que ProductId seja a chave primária do Produto
-                    Product existingProduct = await _context.Product.FindAsync(productId);
+                    string productName = item.Product.Name; // Suponha que ProductId seja a chave primária do Produto
+                    Product existingProduct = await _context.Product.FindAsync(productName);
 
-                    if (existingProduct != null)
-                    {
-                        // O Produto existe, associe-o ao item do pedido
-                        item.Product = existingProduct;
-                    }
-                    else
-                    {
-                        // Lidar com o caso em que o Produto não foi encontrado
-                        return BadRequest($"Produto com ID {productId} não encontrado.");
-                    }
+                    if (existingProduct is null)
+                        return BadRequest($"Produto {productName} não encontrado."); // Lidar com o caso em que o Produto não foi encontrado
+
+                    item.Product = existingProduct; // O Produto existe, associe-o ao item do pedido
                 }
             }
 
-            // Verifique se o Client já existe no banco de dados
-            int clientId = order.Client.ClientId; // Suponha que ClientId seja a chave primária do Client
-            Client existingClient = await _context.Client.FindAsync(clientId);
-
-            if (existingClient != null)
-            {
-                // O Client existe, associe-o ao seu objeto RestaurantOrder
-                order.Client = existingClient;
-            }
-            else
-            {
-                // Lidar com o caso em que o Client não foi encontrado
-                return BadRequest($"Client com ID {clientId} não encontrado.");
-            }
-
             // Verifique se o Motoboy já existe no banco de dados
-            int motoboyId = order.Motoboy.MotoboyId; // Suponha que MotoboyId seja a chave primária do Motoboy
-            Motoboy existingMotoboy = await _context.Motoboy.FindAsync(motoboyId);
+            string deliveryManCpf = order.DeliveryMan.Cpf; // Suponha que MotoboyId seja a chave primária do Motoboy
+            DeliveryMan existingMotoboy = await _context.DeliveryMan.FindAsync(deliveryManCpf);
 
-            if (existingMotoboy != null)
-            {
-                // O Client existe, associe-o ao seu objeto RestaurantOrder
-                order.Motoboy = existingMotoboy;
-            }
-            else
-            {
-                // Lidar com o caso em que o Client não foi encontrado
-                return BadRequest($"Motoboy com ID {motoboyId} não encontrado.");
-            }
+            if (existingMotoboy is null)
+                return BadRequest($"Motoboy com CPF {deliveryManCpf} não encontrado.");
+
+            order.DeliveryMan = existingMotoboy;
 
             // Verifique se o PaymentMethod já existe no banco de dados
             int paymentMethodId = order.Payment.PaymentMethod.PaymentMethodId; // Suponha que PaymentMethodId seja a chave primária do PaymentMethod

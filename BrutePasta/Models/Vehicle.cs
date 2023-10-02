@@ -1,19 +1,22 @@
-﻿using System.Text.RegularExpressions;
+﻿using BrutePasta.Models;
+using System.Text.RegularExpressions;
+using System.ComponentModel.DataAnnotations;
 
 public class Vehicle
 {
-   public int VehicleId { get; set; }
+    [Key]
+    public string LicensePlate { get; set; }
     public string Brand { get; set; }
     public string Model { get; set; }
-    public string LicensePlate { get; set; }
+    public DeliveryMan? DeliveryMan { get; set; }
 
     // Construtor com parâmetros
-    public Vehicle(int vehicleId, string brand, string model, string licensePlate)
+    public Vehicle(string brand, string model, string licensePlate, DeliveryMan deliveryMan)
     {
-        VehicleId = vehicleId;
         Brand = brand;
         Model = model;
         LicensePlate = licensePlate;
+        DeliveryMan = deliveryMan;
     }
 
     public static bool PlateValidation(string licensePlate)

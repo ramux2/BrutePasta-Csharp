@@ -1,13 +1,14 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace BrutePasta.Models;
 
 public class Client
 {
-    public int ClientId { get; set; }
+    [Key]
     public string Cpf { get; set; }
     public string Name { get; set; }
     public Address Address { get; set; }
     public string PhoneNumber { get; set; }
-
 
     public Client()
     {
@@ -15,9 +16,9 @@ public class Client
         Name = string.Empty;
         PhoneNumber = string.Empty;
     }
-    public Client(int clientId, string name, string cpf, Address address, string phoneNumber)
+
+    public Client(string name, string cpf, Address address, string phoneNumber)
     {
-        ClientId = clientId;
         Cpf = cpf;
         Name = name;
         Address = address;

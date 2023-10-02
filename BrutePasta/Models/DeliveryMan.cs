@@ -1,25 +1,24 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace BrutePasta.Models;
 
-public class Motoboy
+public class DeliveryMan
 {
-    public int MotoboyId { get; set; }
+    [Key]
     public string Cpf { get; set; }
     public string Name { get; set; }
     public float OrderTax { get; set; }
-    public Vehicle? Vehicle { get; set; }
 
-    public Motoboy()
+    public DeliveryMan()
     {
         Cpf = string.Empty;
         Name = string.Empty;
     }
 
-    public Motoboy(int motoboyId, string cpf, string name, float orderTax, Vehicle vehicle)
+    public DeliveryMan(string cpf, string name, float orderTax)
     {
-        MotoboyId = motoboyId;
         Cpf = cpf;
         Name = name;
         OrderTax = orderTax;
-        Vehicle = vehicle;
     }
 }

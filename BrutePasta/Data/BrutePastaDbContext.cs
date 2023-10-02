@@ -8,7 +8,7 @@ public class BrutePastaDbContext : DbContext
 
     public DbSet<Address> Address { get; set; }
     public DbSet<Client> Client { get; set; }
-    public DbSet<Motoboy> Motoboy { get; set; }
+    public DbSet<DeliveryMan> DeliveryMan { get; set; }
     public DbSet<Vehicle> Vehicle {  get; set; }
     public DbSet<Product> Product { get; set; }
     public DbSet<ProductType> ProductType { get; set; }
