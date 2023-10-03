@@ -46,5 +46,71 @@ namespace BrutePasta.Controllers
 
             return Created("", payment);
         }
+
+        [HttpPut()]
+        [Route("payment")]
+        public async Task<ActionResult> Update(Payment payment)
+        {
+            if (_context is null)
+                return NotFound();
+
+            if (_context.Payment is null)
+                return NotFound();
+
+            var existingPayment = await _context.Payment.FindAsync(payment.PaymentId);
+
+            if (existingPayment is null)
+                return NotFound();
+
+            // Atualize os atributos do pagamento com base nos valores fornecidos em 'payment'.
+            // Exemplo: existingPayment.Amount = payment.Amount;
+
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPatch()]
+        [Route("payment/{paymentId}")]
+        public async Task<ActionResult> UpdateAttributes(int paymentId, [FromForm] float value, [FromForm] PaymentMethod paymentMethod)
+        {
+            if (_context is null)
+                return NotFound();
+
+            if (_context.Payment is null)
+                return NotFound();
+
+            var existingPayment = await _context.Payment.FindAsync(paymentId);
+
+            if (existingPayment is null)
+                return NotFound();
+
+            // Atualize os atributos do pagamento individualmente com base nos valores fornecidos.
+            existingPayment.Value = value;
+            existingPayment.PaymentMethod = paymentMethod;
+
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpDelete()]
+        [Route("payment/{paymentId}")]
+        public async Task<ActionResult> Delete(int paymentId)
+        {
+            if (_context is null)
+                return NotFound();
+
+            if (_context.Payment is null)
+                return NotFound();
+
+            var existingPayment = await _context.Payment.FindAsync(paymentId);
+
+            if (existingPayment is null)
+                return NotFound();
+
+            _context.Remove(existingPayment);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
     }
 }

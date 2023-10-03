@@ -46,4 +46,69 @@ public class PaymentMethodController : ControllerBase
         await _context.SaveChangesAsync();
         return Created("", paymentMethod);
     }
+
+    [HttpPut()]
+    [Route("paymentMethod")]
+    public async Task<ActionResult> Update(PaymentMethod paymentMethod)
+    {
+        if (_context is null)
+            return NotFound();
+
+        if (_context.PaymentMethod is null)
+            return NotFound();
+
+        var existingPaymentMethod = await _context.PaymentMethod.FindAsync(paymentMethod.PaymentMethodId);
+
+        if (existingPaymentMethod is null)
+            return NotFound();
+
+        // Atualize os atributos do método de pagamento com base nos valores fornecidos em 'paymentMethod'.
+        // Exemplo: existingPaymentMethod.Description = paymentMethod.Description;
+
+        await _context.SaveChangesAsync();
+        return Ok();
+    }
+
+    [HttpPatch()]
+    [Route("paymentMethod/{name}")]
+    public async Task<ActionResult> UpdateAttributes(int paymentMethodId, [FromForm] string name)
+    {
+        if (_context is null)
+            return NotFound();
+
+        if (_context.PaymentMethod is null)
+            return NotFound();
+
+        var existingPaymentMethod = await _context.PaymentMethod.FindAsync(name);
+
+        if (existingPaymentMethod is null)
+            return NotFound();
+
+        // Atualize os atributos do método de pagamento individualmente com base nos valores fornecidos.
+        existingPaymentMethod.Name = name;
+
+        await _context.SaveChangesAsync();
+        return Ok();
+    }
+
+    [HttpDelete()]
+    [Route("paymentMethod/{name}")]
+    public async Task<ActionResult> Delete(int paymentMethodId)
+    {
+        if (_context is null)
+            return NotFound();
+
+        if (_context.PaymentMethod is null)
+            return NotFound();
+
+        var existingPaymentMethod = await _context.PaymentMethod.FindAsync(paymentMethodId);
+
+        if (existingPaymentMethod is null)
+            return NotFound();
+
+        _context.Remove(existingPaymentMethod);
+        await _context.SaveChangesAsync();
+        return Ok();
+    }
+
 }

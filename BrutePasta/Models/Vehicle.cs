@@ -10,6 +10,8 @@ public class Vehicle
     public string Model { get; set; }
     public DeliveryMan? DeliveryMan { get; set; }
 
+    public Vehicle() { }
+
     // Construtor com parâmetros
     public Vehicle(string brand, string model, string licensePlate, DeliveryMan deliveryMan)
     {

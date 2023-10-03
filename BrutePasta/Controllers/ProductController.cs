@@ -46,5 +46,74 @@ namespace BrutePasta.Controllers
 
             return Created("", product);
         }
+
+        [HttpPut()]
+        [Route("product")]
+        public async Task<ActionResult> Update(Product product)
+        {
+            if (_context is null)
+                return NotFound();
+
+            if (_context.Product is null)
+                return NotFound();
+
+            var existingProduct = await _context.Product.FindAsync(product.ProductId);
+
+            if (existingProduct is null)
+                return NotFound();
+
+            // Atualize os atributos do produto com base nos valores fornecidos em 'product'.
+            // Exemplo: existingProduct.Price = product.Price;
+
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPatch()]
+        [Route("product/{name}")]
+        public async Task<ActionResult> UpdateAttributes(int productId, [FromForm] string name, [FromForm] int qtyAvailable, [FromForm] float price, [FromForm] string description, [FromForm] ProductType productType)
+        {
+            if (_context is null)
+                return NotFound();
+
+            if (_context.Product is null)
+                return NotFound();
+
+            var existingProduct = await _context.Product.FindAsync(productId);
+
+            if (existingProduct is null)
+                return NotFound();
+
+            // Atualize os atributos do produto individualmente com base nos valores fornecidos.
+            existingProduct.Name = name;
+            existingProduct.QtyAvailable = qtyAvailable;
+            existingProduct.Price = price;
+            existingProduct.Description = description;
+            existingProduct.ProductType = productType;
+
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpDelete()]
+        [Route("product/{id}")]
+        public async Task<ActionResult> Delete(int productId)
+        {
+            if (_context is null)
+                return NotFound();
+
+            if (_context.Product is null)
+                return NotFound();
+
+            var existingProduct = await _context.Product.FindAsync(productId);
+
+            if (existingProduct is null)
+                return NotFound();
+
+            _context.Remove(existingProduct);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
     }
 }

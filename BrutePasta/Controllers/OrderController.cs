@@ -94,6 +94,68 @@ namespace BrutePasta.Controllers
             return Created("", order);
         }
 
+        [HttpPut()]
+        [Route("order")]
+        public async Task<ActionResult> Update(RestaurantOrder order)
+        {
+            if (_context is null)
+                return NotFound();
+
+            if (_context.RestaurantOrder is null)
+                return NotFound();
+
+            var existingOrder = await _context.RestaurantOrder.FindAsync(order.RestaurantOrderId);
+
+            if (existingOrder is null)
+                return NotFound();
+
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPatch()]
+        [Route("order/{orderId}")]
+        public async Task<ActionResult> UpdateAttributes(int restaurantOrderId, [FromForm] Payment payment, [FromForm] DateTime dateTime)
+        {
+            if (_context is null)
+
+            if (_context.RestaurantOrder is null)
+                return NotFound();
+
+            var existingOrder = await _context.RestaurantOrder.FindAsync(restaurantOrderId);
+
+            if (existingOrder is null)
+                return NotFound();
+
+            // Atualize os atributos do pedido individualmente com base nos valores fornecidos.
+            existingOrder.Payment = payment;
+            existingOrder.PaymentDate = dateTime;
+
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpDelete()]
+        [Route("order/{orderId}")]
+        public async Task<ActionResult> Delete(int orderId)
+        {
+            if (_context is null)
+                return NotFound();
+
+            if (_context.RestaurantOrder is null)
+                return NotFound();
+
+            var existingOrder = await _context.RestaurantOrder.FindAsync(orderId);
+
+            if (existingOrder is null)
+                return NotFound();
+
+            _context.Remove(existingOrder);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+
         public static float calculateSubtotal(Item item)
         {
             return item.Product.Price * item.Quantity;

@@ -59,4 +59,70 @@ public class VehicleController : ControllerBase
 
         return Created("", vehicle);
     }
+
+    [HttpPut()]
+    [Route("vehicle")]
+    public async Task<ActionResult> Update(Vehicle vehicle)
+    {
+        if (_context is null)
+            return NotFound();
+
+        if (_context.Vehicle is null)
+            return NotFound();
+
+        var existingVehicle = await _context.Vehicle.FindAsync(vehicle.LicensePlate);
+
+        if (existingVehicle is null)
+            return NotFound();
+
+        // Atualize os atributos do veículo com base nos valores fornecidos em 'vehicle'.
+        // Exemplo: existingVehicle.Brand = vehicle.Brand;
+
+        await _context.SaveChangesAsync();
+        return Ok();
+    }
+
+    [HttpPatch()]
+    [Route("vehicle/{licensePlate}")]
+    public async Task<ActionResult> UpdateAttributes(string licensePlate, [FromForm] string brand, [FromForm] string model)
+    {
+        if (_context is null)
+            return NotFound();
+
+        if (_context.Vehicle is null)
+            return NotFound();
+
+        var existingVehicle = await _context.Vehicle.FindAsync(licensePlate);
+
+        if (existingVehicle is null)
+            return NotFound();
+
+        // Atualize os atributos do veículo individualmente com base nos valores fornecidos.
+        existingVehicle.Brand = brand;
+        existingVehicle.Model = model;
+
+        await _context.SaveChangesAsync();
+        return Ok();
+    }
+
+    [HttpDelete()]
+    [Route("vehicle/{licensePlate}")]
+    public async Task<ActionResult> Delete(string licensePlate)
+    {
+        if (_context is null)
+            return NotFound();
+
+        if (_context.Vehicle is null)
+            return NotFound();
+
+        var existingVehicle = await _context.Vehicle.FindAsync(licensePlate);
+
+        if (existingVehicle is null)
+            return NotFound();
+
+        _context.Remove(existingVehicle);
+        await _context.SaveChangesAsync();
+        return Ok();
+    }
+
 }
