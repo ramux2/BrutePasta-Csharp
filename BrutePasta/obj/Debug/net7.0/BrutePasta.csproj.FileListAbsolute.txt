@@ -137,3 +137,4 @@ C:\Users\João\OneDrive\Documentos\GitHub\BrutePasta-Csharp\BrutePasta\obj\Debug
 C:\Users\João\OneDrive\Documentos\GitHub\BrutePasta-Csharp\BrutePasta\obj\Debug\net7.0\BrutePasta.genruntimeconfig.cache
 C:\Users\João\OneDrive\Documentos\GitHub\BrutePasta-Csharp\BrutePasta\obj\Debug\net7.0\ref\BrutePasta.dll
 C:\Users\João\OneDrive\Documentos\GitHub\BrutePasta-Csharp\BrutePasta\bin\Debug\net7.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\Guilherme\Documents\Projetos\BrutePasta2.0\BrutePasta\bin\Debug\net7.0\Microsoft.AspNetCore.JsonPatch.dll

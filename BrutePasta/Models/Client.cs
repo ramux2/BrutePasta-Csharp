@@ -4,10 +4,10 @@ namespace BrutePasta.Models;
 
 public class Client
 {
-    [Key]
+    public int Id { get; set; }
     public string Cpf { get; set; }
     public string Name { get; set; }
-    public Address Address { get; set; }
+    public ICollection<Address>? Address { get; set; } = new List<Address>(); //Lista de Endereço
     public string PhoneNumber { get; set; }
 
     public Client()
@@ -17,7 +17,7 @@ public class Client
         PhoneNumber = string.Empty;
     }
 
-    public Client(string name, string cpf, Address address, string phoneNumber)
+    public Client(string name, string cpf, List<Address>? address, string phoneNumber)
     {
         Cpf = cpf;
         Name = name;

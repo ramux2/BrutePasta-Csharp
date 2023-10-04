@@ -1,4 +1,6 @@
-﻿namespace BrutePasta.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace BrutePasta.Models;
 
 public class Address
 {
@@ -6,18 +8,8 @@ public class Address
     public string Cep { get; set; }
     public string StreetName { get; set; }
     public string Number { get; set; }
-
-    public Address()
-    {
-        Cep = string.Empty;
-        StreetName = string.Empty;
-        Number = string.Empty;
-    }
-    public Address(int addressId, string streetName, string number, string cep)
-    {
-        AddressId = addressId;
-        StreetName = streetName;
-        Number = number;
-        Cep = cep;
-    }
+    public int ClientId { get; set; } //Foreign Key
+    [JsonIgnore]
+    public Client? Client { get; set; } //Prop de navegação
+   
 }

@@ -55,49 +55,27 @@ public class ClientController : ControllerBase
     [Route("client")]
     public async Task<ActionResult> Change(Client client)
     {
-        if (_context is null) 
+        if (_context is null)
             return NotFound();
 
-        if (_context.Client is null) 
+        if (_context.Client is null)
             return NotFound();
 
-        var clientTemp = await _context.Client.FindAsync(client.Cpf);
+        // Carregue o cliente existente do banco de dados com o mesmo CPF
+        var existingClient = await _context.Client.AsNoTracking().FirstOrDefaultAsync(x => x.Id == client.Id);
 
-        if (clientTemp is null) 
+        if (existingClient is null)
             return NotFound();
 
-        if (!Client.IsCpf(clientTemp.Cpf))
+        if (!Client.IsCpf(existingClient.Cpf))
             return BadRequest("CPF inválido!");
 
-        _context.Client.Update(client);
+        _context.Entry(client).State = EntityState.Modified;
+
         await _context.SaveChangesAsync();
         return Ok();
     }
 
-    [HttpPatch()]
-    [Route("client/{cpf}")]
-    public async Task<ActionResult> ChangeAtributes(string cpf, [FromForm] Address address, [FromForm] string name, [FromForm] string phoneNumber)
-    {
-        if (_context is null) 
-            return NotFound();
-
-        if (_context.Client is null) 
-            return NotFound();
-
-        var clientTemp = await _context.Client.FindAsync(cpf);
-        if (clientTemp is null) 
-            return NotFound();
-
-        if (!Client.IsCpf(clientTemp.Cpf))
-            return BadRequest("CPF inválido!");
-
-        clientTemp.Address = address;
-        clientTemp.Name = name;
-        clientTemp.PhoneNumber = phoneNumber;
-
-        await _context.SaveChangesAsync();
-        return Ok();
-    }
 
     [HttpDelete()]
     [Route("client/{cpf}")]

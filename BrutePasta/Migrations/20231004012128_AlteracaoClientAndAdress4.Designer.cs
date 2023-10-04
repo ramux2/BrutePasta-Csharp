@@ -3,6 +3,7 @@ using System;
 using BrutePasta.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrutePasta.Migrations
 {
     [DbContext(typeof(BrutePastaDbContext))]
-    partial class BrutePastaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231004012128_AlteracaoClientAndAdress4")]
+    partial class AlteracaoClientAndAdress4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,7 +32,7 @@ namespace BrutePasta.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("ClientId")
+                    b.Property<int?>("ClientId")
                         .HasColumnType("int");
 
                     b.Property<string>("Number")
@@ -49,7 +52,7 @@ namespace BrutePasta.Migrations
 
             modelBuilder.Entity("BrutePasta.Models.Client", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ClientId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -65,7 +68,7 @@ namespace BrutePasta.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("ClientId");
 
                     b.ToTable("Client");
                 });
@@ -246,9 +249,7 @@ namespace BrutePasta.Migrations
                 {
                     b.HasOne("BrutePasta.Models.Client", "Client")
                         .WithMany("Address")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClientId");
 
                     b.Navigation("Client");
                 });
