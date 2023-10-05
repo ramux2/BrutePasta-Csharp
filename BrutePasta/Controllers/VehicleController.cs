@@ -27,12 +27,12 @@ public class VehicleController : ControllerBase
     }
 
     [HttpGet()]
-    [Route("vehicle/{licensePlate}")]
-    public async Task<ActionResult<Vehicle>> Search([FromRoute] string licensePlate)
+    [Route("vehicle/{id}")]
+    public async Task<ActionResult<Vehicle>> Search([FromRoute] int id)
     {
         if(_context.Vehicle is null)
             return NotFound();
-        var vehicle = await _context.Vehicle.FindAsync(licensePlate);
+        var vehicle = await _context.Vehicle.FindAsync(id);
         if (vehicle is null)
             return NotFound();
         return vehicle;
@@ -43,10 +43,12 @@ public class VehicleController : ControllerBase
     public async Task<ActionResult<Vehicle>> Insert(Vehicle vehicle)
     {
         // Obtenha o vehicleId do JSON de entrada
-        string deliveryManCpf = vehicle.DeliveryMan.Cpf; // Assumindo que o JSON possui um objeto Vehicle aninhado
+        int deliveryManId = vehicle.DeliveryMan.Id; // Assumindo que o JSON possui um objeto Vehicle aninhado
 
         // Verifique se o Vehicle com o vehicleId fornecido existe no banco de dados
-        DeliveryMan existingDeliveryMan = await _context.DeliveryMan.FirstOrDefaultAsync(x => x.Cpf == deliveryManCpf);
+        DeliveryMan existingDeliveryMan = await _context.DeliveryMan.AsNoTracking().FirstOrDefaultAsync(x => x.Id == deliveryManId);
+
+        _context.Entry(vehicle).State = EntityState.Modified;
 
         if (existingDeliveryMan is null)
             return BadRequest("DeliveryMan not found");
@@ -70,44 +72,20 @@ public class VehicleController : ControllerBase
         if (_context.Vehicle is null)
             return NotFound();
 
-        var existingVehicle = await _context.Vehicle.FindAsync(vehicle.LicensePlate);
+        var existingVehicle = await _context.Vehicle.AsNoTracking().FirstOrDefaultAsync(x => x.Id == vehicle.Id);
 
         if (existingVehicle is null)
             return NotFound();
 
-        // Atualize os atributos do veículo com base nos valores fornecidos em 'vehicle'.
-        // Exemplo: existingVehicle.Brand = vehicle.Brand;
-
-        await _context.SaveChangesAsync();
-        return Ok();
-    }
-
-    [HttpPatch()]
-    [Route("vehicle/{licensePlate}")]
-    public async Task<ActionResult> UpdateAttributes(string licensePlate, [FromForm] string brand, [FromForm] string model)
-    {
-        if (_context is null)
-            return NotFound();
-
-        if (_context.Vehicle is null)
-            return NotFound();
-
-        var existingVehicle = await _context.Vehicle.FindAsync(licensePlate);
-
-        if (existingVehicle is null)
-            return NotFound();
-
-        // Atualize os atributos do veículo individualmente com base nos valores fornecidos.
-        existingVehicle.Brand = brand;
-        existingVehicle.Model = model;
+        _context.Entry(vehicle).State = EntityState.Modified;
 
         await _context.SaveChangesAsync();
         return Ok();
     }
 
     [HttpDelete()]
-    [Route("vehicle/{licensePlate}")]
-    public async Task<ActionResult> Delete(string licensePlate)
+    [Route("vehicle/{id}")]
+    public async Task<ActionResult> Delete(int id)
     {
         if (_context is null)
             return NotFound();
@@ -115,7 +93,7 @@ public class VehicleController : ControllerBase
         if (_context.Vehicle is null)
             return NotFound();
 
-        var existingVehicle = await _context.Vehicle.FindAsync(licensePlate);
+        var existingVehicle = await _context.Vehicle.FindAsync(id);
 
         if (existingVehicle is null)
             return NotFound();

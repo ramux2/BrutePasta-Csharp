@@ -31,10 +31,10 @@ namespace BrutePasta.Controllers
         public async Task<ActionResult<Payment>> Insert(Payment payment)
         {
             // Obtenha o paymentMethodId do JSON de entrada
-            int paymentMethodId = payment.PaymentMethod?.PaymentMethodId ?? 0; // Assumindo que o JSON possui um objeto PaymentMethod aninhado
+            int paymentMethodId = payment.PaymentMethod.Id; // Assumindo que o JSON possui um objeto PaymentMethod aninhado
 
             // Verifique se PaymentMethod com o paymentMethodId fornecido existe no banco de dados
-            PaymentMethod existingPaymentMethod = await _context.PaymentMethod.FirstOrDefaultAsync(v => v.PaymentMethodId == paymentMethodId);
+            PaymentMethod existingPaymentMethod = await _context.PaymentMethod.FirstOrDefaultAsync(v => v.Id == paymentMethodId);
 
             if (existingPaymentMethod is null)
                 return BadRequest("Vehicle not found");
@@ -57,44 +57,20 @@ namespace BrutePasta.Controllers
             if (_context.Payment is null)
                 return NotFound();
 
-            var existingPayment = await _context.Payment.FindAsync(payment.PaymentId);
+            var existingPayment = await _context.Payment.AsNoTracking().FirstOrDefaultAsync(x => x.Id == payment.Id);
 
             if (existingPayment is null)
                 return NotFound();
 
-            // Atualize os atributos do pagamento com base nos valores fornecidos em 'payment'.
-            // Exemplo: existingPayment.Amount = payment.Amount;
-
-            await _context.SaveChangesAsync();
-            return Ok();
-        }
-
-        [HttpPatch()]
-        [Route("payment/{paymentId}")]
-        public async Task<ActionResult> UpdateAttributes(int paymentId, [FromForm] float value, [FromForm] PaymentMethod paymentMethod)
-        {
-            if (_context is null)
-                return NotFound();
-
-            if (_context.Payment is null)
-                return NotFound();
-
-            var existingPayment = await _context.Payment.FindAsync(paymentId);
-
-            if (existingPayment is null)
-                return NotFound();
-
-            // Atualize os atributos do pagamento individualmente com base nos valores fornecidos.
-            existingPayment.Value = value;
-            existingPayment.PaymentMethod = paymentMethod;
+            _context.Entry(payment).State = EntityState.Modified;
 
             await _context.SaveChangesAsync();
             return Ok();
         }
 
         [HttpDelete()]
-        [Route("payment/{paymentId}")]
-        public async Task<ActionResult> Delete(int paymentId)
+        [Route("payment/{id}")]
+        public async Task<ActionResult> Delete(int id)
         {
             if (_context is null)
                 return NotFound();
@@ -102,7 +78,7 @@ namespace BrutePasta.Controllers
             if (_context.Payment is null)
                 return NotFound();
 
-            var existingPayment = await _context.Payment.FindAsync(paymentId);
+            var existingPayment = await _context.Payment.FindAsync(id);
 
             if (existingPayment is null)
                 return NotFound();
@@ -111,6 +87,5 @@ namespace BrutePasta.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
-
     }
 }

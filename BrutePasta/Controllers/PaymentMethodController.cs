@@ -27,12 +27,12 @@ public class PaymentMethodController : ControllerBase
     }
 
     [HttpGet()]
-    [Route("paymentMethod/{name}")]
-    public async Task<ActionResult<PaymentMethod>> SearchName([FromRoute] string name)
+    [Route("paymentMethod/{id}")]
+    public async Task<ActionResult<PaymentMethod>> SearchName([FromRoute] int id)
     {
         if (_context.PaymentMethod is null)
             return NotFound();
-        var paymentMethod = await _context.PaymentMethod.FindAsync(name);
+        var paymentMethod = await _context.PaymentMethod.FindAsync(id);
         if (paymentMethod is null)
             return NotFound();
         return paymentMethod;
@@ -57,43 +57,20 @@ public class PaymentMethodController : ControllerBase
         if (_context.PaymentMethod is null)
             return NotFound();
 
-        var existingPaymentMethod = await _context.PaymentMethod.FindAsync(paymentMethod.PaymentMethodId);
+        var existingPaymentMethod = await _context.PaymentMethod.AsNoTracking().FirstOrDefaultAsync(x => x.Id == paymentMethod.Id);
 
         if (existingPaymentMethod is null)
             return NotFound();
 
-        // Atualize os atributos do método de pagamento com base nos valores fornecidos em 'paymentMethod'.
-        // Exemplo: existingPaymentMethod.Description = paymentMethod.Description;
-
-        await _context.SaveChangesAsync();
-        return Ok();
-    }
-
-    [HttpPatch()]
-    [Route("paymentMethod/{name}")]
-    public async Task<ActionResult> UpdateAttributes(int paymentMethodId, [FromForm] string name)
-    {
-        if (_context is null)
-            return NotFound();
-
-        if (_context.PaymentMethod is null)
-            return NotFound();
-
-        var existingPaymentMethod = await _context.PaymentMethod.FindAsync(name);
-
-        if (existingPaymentMethod is null)
-            return NotFound();
-
-        // Atualize os atributos do método de pagamento individualmente com base nos valores fornecidos.
-        existingPaymentMethod.Name = name;
+        _context.Entry(paymentMethod).State = EntityState.Modified;
 
         await _context.SaveChangesAsync();
         return Ok();
     }
 
     [HttpDelete()]
-    [Route("paymentMethod/{name}")]
-    public async Task<ActionResult> Delete(int paymentMethodId)
+    [Route("paymentMethod/{id}")]
+    public async Task<ActionResult> Delete(int id)
     {
         if (_context is null)
             return NotFound();
@@ -101,7 +78,7 @@ public class PaymentMethodController : ControllerBase
         if (_context.PaymentMethod is null)
             return NotFound();
 
-        var existingPaymentMethod = await _context.PaymentMethod.FindAsync(paymentMethodId);
+        var existingPaymentMethod = await _context.PaymentMethod.FindAsync(id);
 
         if (existingPaymentMethod is null)
             return NotFound();

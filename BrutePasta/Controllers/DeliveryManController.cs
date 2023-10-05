@@ -27,12 +27,12 @@ namespace BrutePasta.Controllers
         }
 
         [HttpGet()]
-        [Route("deliveryMan/{cpf}")]
-        public async Task<ActionResult<DeliveryMan>> Search([FromRoute] string cpf)
+        [Route("deliveryMan/{id}")]
+        public async Task<ActionResult<DeliveryMan>> Search([FromRoute] int id)
         {
             if (_context.DeliveryMan is null)
                 return NotFound();
-            var motoboy = await _context.DeliveryMan.FindAsync(cpf);
+            var motoboy = await _context.DeliveryMan.FindAsync(id);
             if (motoboy is null)
                 return NotFound();
             return motoboy;
@@ -58,39 +58,20 @@ namespace BrutePasta.Controllers
             if (_context.DeliveryMan is null)
                 return NotFound();
 
-            var existingDeliveryMan = await _context.DeliveryMan.FindAsync(deliveryMan.Cpf);
+            var existingDeliveryMan = await _context.DeliveryMan.AsNoTracking().FirstOrDefaultAsync(x => x.Id == deliveryMan.Id);
 
             if (existingDeliveryMan is null)
                 return NotFound();
 
-            await _context.SaveChangesAsync();
-            return Ok();
-        }
-
-        [HttpPatch()]
-        [Route("deliveryMan/{cpf}")]
-        public async Task<ActionResult> UpdateAttributes(string cpf,[FromForm] string name)
-        {
-            if (_context is null)
-                return NotFound();
-
-            if (_context.DeliveryMan is null)
-                return NotFound();
-
-            var existingDeliveryMan = await _context.DeliveryMan.FindAsync(cpf);
-
-            if (existingDeliveryMan is null)
-                return NotFound();
-
-            existingDeliveryMan.Name = name;
+            _context.Entry(deliveryMan).State = EntityState.Modified;
 
             await _context.SaveChangesAsync();
             return Ok();
         }
 
         [HttpDelete()]
-        [Route("deliveryMan/{cpf}")]
-        public async Task<ActionResult> Delete(string cpf)
+        [Route("deliveryMan/{id}")]
+        public async Task<ActionResult> Delete(int id)
         {
             if (_context is null)
                 return NotFound();
@@ -98,7 +79,7 @@ namespace BrutePasta.Controllers
             if (_context.DeliveryMan is null)
                 return NotFound();
 
-            var existingDeliveryMan = await _context.DeliveryMan.FindAsync(cpf);
+            var existingDeliveryMan = await _context.DeliveryMan.FindAsync(id);
 
             if (existingDeliveryMan is null)
                 return NotFound();

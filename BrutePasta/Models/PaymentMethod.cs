@@ -2,17 +2,16 @@
 
 public class PaymentMethod
 {
-    public int PaymentMethodId { get; set; }
-
+    public int Id { get; set; }
     public string Name { get; set; }
 
     public PaymentMethod()
     {
         Name = string.Empty;
     }
-    public PaymentMethod(int paymentMethodId, string name)
+    public PaymentMethod(int id, string name)
     {
-        PaymentMethodId = paymentMethodId;
+        Id = id;
         Name = name;
     }
 }

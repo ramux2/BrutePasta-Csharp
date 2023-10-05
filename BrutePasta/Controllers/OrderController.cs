@@ -31,11 +31,11 @@ namespace BrutePasta.Controllers
         public async Task<ActionResult<RestaurantOrder>> Insert(RestaurantOrder order)
         {
             // Verifique se o Client já existe no banco de dados
-            string clientCpf = order.Client.Cpf; // Suponha que ClientId seja a chave primária do Client
-            Client existingClient = await _context.Client.FirstOrDefaultAsync(x => x.Cpf == clientCpf);
+            int clientId = order.Client.Id;
+            Client existingClient = await _context.Client.FirstOrDefaultAsync(x => x.Id == clientId);
 
             if (existingClient is null)
-                return BadRequest($"Client com CPF {clientCpf} não encontrado.");
+                return BadRequest($"Client com ID {clientId} não encontrado.");
 
             order.Client = existingClient;
             
@@ -50,27 +50,42 @@ namespace BrutePasta.Controllers
                 if (item.Product != null)
                 {
                     // Obtenha o Produto existente pelo ID
-                    string productName = item.Product.Name; // Suponha que ProductId seja a chave primária do Produto
-                    Product existingProduct = await _context.Product.FindAsync(productName);
+                    int productId = item.Product.Id; // Suponha que ProductId seja a chave primária do Produto
+                    Product existingProduct = await _context.Product.FindAsync(productId);
 
+                    if (existingProduct == null || (existingProduct.QtyAvailable + item.Quantity) < 0)
+                        return BadRequest("Quantidade indisponível");
+                    
                     if (existingProduct is null)
-                        return BadRequest($"Produto {productName} não encontrado."); // Lidar com o caso em que o Produto não foi encontrado
+                        return BadRequest($"Produto {productId} não encontrado."); // Lidar com o caso em que o Produto não foi encontrado
 
+                    existingProduct.QtyAvailable -= item.Quantity;
                     item.Product = existingProduct; // O Produto existe, associe-o ao item do pedido
                 }
             }
 
-            // Verifique se o Motoboy já existe no banco de dados
-            string deliveryManCpf = order.DeliveryMan.Cpf; // Suponha que MotoboyId seja a chave primária do Motoboy
-            DeliveryMan existingMotoboy = await _context.DeliveryMan.FindAsync(deliveryManCpf);
+            // Verifique se a lista de motoboys não é nula ou vazia
+            if (_context.DeliveryMan is null || !_context.DeliveryMan.Any())
+                return BadRequest("Não há motoboys cadastrados.");
 
-            if (existingMotoboy is null)
-                return BadRequest($"Motoboy com CPF {deliveryManCpf} não encontrado.");
+            // Gere um índice aleatório com base no número de motoboys disponíveis
+            var random = new Random();
+            int randomIndex = random.Next(0, _context.DeliveryMan.Count());
 
-            order.DeliveryMan = existingMotoboy;
+            // Selecione o motoboy correspondente ao índice aleatório gerado
+            var selectedDeliveryMan = _context.DeliveryMan.Skip(randomIndex).FirstOrDefault();
+
+            if (selectedDeliveryMan is null)
+                return BadRequest("Motoboy selecionado não encontrado.");
+
+            // Incremente a taxa de pedido (OrderTax) para o motoboy selecionado
+            selectedDeliveryMan.OrderTax += 20;
+
+            // Associe o motoboy selecionado ao pedido
+            order.DeliveryMan = selectedDeliveryMan;
 
             // Verifique se o PaymentMethod já existe no banco de dados
-            int paymentMethodId = order.Payment.PaymentMethod.PaymentMethodId; // Suponha que PaymentMethodId seja a chave primária do PaymentMethod
+            int paymentMethodId = order.Payment.PaymentMethod.Id; // Suponha que PaymentMethodId seja a chave primária do PaymentMethod
             PaymentMethod existingPaymentMethod = await _context.PaymentMethod.FindAsync(paymentMethodId);
 
             if (existingPaymentMethod != null)
@@ -104,40 +119,18 @@ namespace BrutePasta.Controllers
             if (_context.RestaurantOrder is null)
                 return NotFound();
 
-            var existingOrder = await _context.RestaurantOrder.FindAsync(order.RestaurantOrderId);
+            RestaurantOrder existingOrder = await _context.RestaurantOrder.FindAsync(order.Id);
 
             if (existingOrder is null)
                 return NotFound();
-
-            await _context.SaveChangesAsync();
-            return Ok();
-        }
-
-        [HttpPatch()]
-        [Route("order/{orderId}")]
-        public async Task<ActionResult> UpdateAttributes(int restaurantOrderId, [FromForm] Payment payment, [FromForm] DateTime dateTime)
-        {
-            if (_context is null)
-
-            if (_context.RestaurantOrder is null)
-                return NotFound();
-
-            var existingOrder = await _context.RestaurantOrder.FindAsync(restaurantOrderId);
-
-            if (existingOrder is null)
-                return NotFound();
-
-            // Atualize os atributos do pedido individualmente com base nos valores fornecidos.
-            existingOrder.Payment = payment;
-            existingOrder.PaymentDate = dateTime;
 
             await _context.SaveChangesAsync();
             return Ok();
         }
 
         [HttpDelete()]
-        [Route("order/{orderId}")]
-        public async Task<ActionResult> Delete(int orderId)
+        [Route("order/{id}")]
+        public async Task<ActionResult> Delete(int id)
         {
             if (_context is null)
                 return NotFound();
@@ -145,7 +138,7 @@ namespace BrutePasta.Controllers
             if (_context.RestaurantOrder is null)
                 return NotFound();
 
-            var existingOrder = await _context.RestaurantOrder.FindAsync(orderId);
+            var existingOrder = await _context.RestaurantOrder.FindAsync(id);
 
             if (existingOrder is null)
                 return NotFound();
@@ -154,7 +147,6 @@ namespace BrutePasta.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
-
 
         public static float calculateSubtotal(Item item)
         {
@@ -171,6 +163,5 @@ namespace BrutePasta.Controllers
             total += 20;
             return total;
         }
-
     }
 }

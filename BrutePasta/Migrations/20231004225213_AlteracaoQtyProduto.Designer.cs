@@ -3,6 +3,7 @@ using System;
 using BrutePasta.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BrutePasta.Migrations
 {
     [DbContext(typeof(BrutePastaDbContext))]
-    partial class BrutePastaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231004225213_AlteracaoQtyProduto")]
+    partial class AlteracaoQtyProduto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,7 +24,7 @@ namespace BrutePasta.Migrations
 
             modelBuilder.Entity("BrutePasta.Models.Address", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("AddressId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -40,7 +43,7 @@ namespace BrutePasta.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("AddressId");
 
                     b.HasIndex("ClientId");
 
@@ -72,13 +75,8 @@ namespace BrutePasta.Migrations
 
             modelBuilder.Entity("BrutePasta.Models.DeliveryMan", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
                     b.Property<string>("Cpf")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -87,14 +85,14 @@ namespace BrutePasta.Migrations
                     b.Property<float>("OrderTax")
                         .HasColumnType("float");
 
-                    b.HasKey("Id");
+                    b.HasKey("Cpf");
 
                     b.ToTable("DeliveryMan");
                 });
 
             modelBuilder.Entity("BrutePasta.Models.Item", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ItemId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -107,7 +105,7 @@ namespace BrutePasta.Migrations
                     b.Property<int?>("RestaurantOrderId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ItemId");
 
                     b.HasIndex("ProductId");
 
@@ -118,7 +116,7 @@ namespace BrutePasta.Migrations
 
             modelBuilder.Entity("BrutePasta.Models.Payment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PaymentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -128,7 +126,7 @@ namespace BrutePasta.Migrations
                     b.Property<float>("Value")
                         .HasColumnType("float");
 
-                    b.HasKey("Id");
+                    b.HasKey("PaymentId");
 
                     b.HasIndex("PaymentMethodId");
 
@@ -137,7 +135,7 @@ namespace BrutePasta.Migrations
 
             modelBuilder.Entity("BrutePasta.Models.PaymentMethod", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PaymentMethodId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -145,14 +143,14 @@ namespace BrutePasta.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("PaymentMethodId");
 
                     b.ToTable("PaymentMethod");
                 });
 
             modelBuilder.Entity("BrutePasta.Models.Product", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -173,7 +171,7 @@ namespace BrutePasta.Migrations
                     b.Property<int>("QtyAvailable")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductId");
 
                     b.HasIndex("ProductTypeId");
 
@@ -182,7 +180,7 @@ namespace BrutePasta.Migrations
 
             modelBuilder.Entity("BrutePasta.Models.ProductType", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProductTypeId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
@@ -190,22 +188,22 @@ namespace BrutePasta.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductTypeId");
 
                     b.ToTable("ProductType");
                 });
 
             modelBuilder.Entity("BrutePasta.Models.RestaurantOrder", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("RestaurantOrderId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DeliveryManId")
-                        .HasColumnType("int");
+                    b.Property<string>("DeliveryManCpf")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime(6)");
@@ -213,11 +211,11 @@ namespace BrutePasta.Migrations
                     b.Property<int>("PaymentId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("RestaurantOrderId");
 
                     b.HasIndex("ClientId");
 
-                    b.HasIndex("DeliveryManId");
+                    b.HasIndex("DeliveryManCpf");
 
                     b.HasIndex("PaymentId");
 
@@ -226,28 +224,23 @@ namespace BrutePasta.Migrations
 
             modelBuilder.Entity("Vehicle", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("LicensePlate")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Brand")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("DeliveryManId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LicensePlate")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<string>("DeliveryManCpf")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Model")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.HasKey("Id");
+                    b.HasKey("LicensePlate");
 
-                    b.HasIndex("DeliveryManId");
+                    b.HasIndex("DeliveryManCpf");
 
                     b.ToTable("Vehicle");
                 });
@@ -308,9 +301,7 @@ namespace BrutePasta.Migrations
 
                     b.HasOne("BrutePasta.Models.DeliveryMan", "DeliveryMan")
                         .WithMany()
-                        .HasForeignKey("DeliveryManId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DeliveryManCpf");
 
                     b.HasOne("BrutePasta.Models.Payment", "Payment")
                         .WithMany()
@@ -329,7 +320,7 @@ namespace BrutePasta.Migrations
                 {
                     b.HasOne("BrutePasta.Models.DeliveryMan", "DeliveryMan")
                         .WithMany()
-                        .HasForeignKey("DeliveryManId");
+                        .HasForeignKey("DeliveryManCpf");
 
                     b.Navigation("DeliveryMan");
                 });

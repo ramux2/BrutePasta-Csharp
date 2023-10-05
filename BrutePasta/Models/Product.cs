@@ -2,7 +2,7 @@ namespace BrutePasta.Models;
 
 public class Product
 {
-    public int ProductId { get; set; }
+    public int Id { get; set; }
     public string Name { get; set; }
     public int QtyAvailable { get; set; }
     public float Price { get; set; }
@@ -14,9 +14,9 @@ public class Product
         Name = string.Empty;
         Description = string.Empty;
     }
-    public Product(int productId, string name, int qtyAvailable, float price, string description, ProductType productType)
+    public Product(int id, string name, int qtyAvailable, float price, string description, ProductType productType)
     {
-        ProductId = productId;
+        Id = id;
         Name = name;
         QtyAvailable = qtyAvailable;
         Price = price;

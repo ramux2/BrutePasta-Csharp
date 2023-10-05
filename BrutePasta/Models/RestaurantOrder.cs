@@ -1,7 +1,7 @@
 namespace BrutePasta.Models;
 public class RestaurantOrder
 {
-    public int RestaurantOrderId { get; set; }
+    public int Id { get; set; }
     public List<Item> Items { get; set; }
     public Client Client { get; set; }
     public DeliveryMan DeliveryMan { get; set; }
@@ -10,9 +10,9 @@ public class RestaurantOrder
 
     public RestaurantOrder() {}
 
-    public RestaurantOrder(int orderId, Client client, List<Item> items, DeliveryMan deliveryMan, DateTime paymentDate, Payment payment)
+    public RestaurantOrder(int id, Client client, List<Item> items, DeliveryMan deliveryMan, DateTime paymentDate, Payment payment)
     {
-        RestaurantOrderId = orderId;
+        Id = id;
         Client = client;
         Items = items;
         PaymentDate = paymentDate;

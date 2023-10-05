@@ -2,14 +2,14 @@ namespace BrutePasta.Models;
 
 public class Item
 {
-    public int ItemId { get; set; }
+    public int Id { get; set; }
     public int Quantity { get; set; }
     public Product? Product { get; set; }
 
     public Item() {}
-    public Item(int itemId, Product product, int quantity)
+    public Item(int id, Product product, int quantity)
     {
-        ItemId = itemId;
+        Id = id;
         Quantity = quantity;
         Product = product;
     }

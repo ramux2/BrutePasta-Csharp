@@ -27,12 +27,12 @@ public class ProductTypeController : ControllerBase
     }
 
     [HttpGet()]
-    [Route("productType/{name}")]
-    public async Task<ActionResult<ProductType>> SearchName([FromRoute] string name)
+    [Route("productType/{id}")]
+    public async Task<ActionResult<ProductType>> SearchName([FromRoute] int id)
     {
         if (_context.ProductType is null)
             return NotFound();
-        var productType = await _context.ProductType.FindAsync(name);
+        var productType = await _context.ProductType.FindAsync(id);
         if (productType is null)
             return NotFound();
         return productType;
@@ -57,43 +57,20 @@ public class ProductTypeController : ControllerBase
         if (_context.ProductType is null)
             return NotFound();
 
-        var existingProductType = await _context.ProductType.FindAsync(productType.ProductTypeId);
+        var existingProductType = await _context.ProductType.AsNoTracking().FirstOrDefaultAsync(x => x.Id == productType.Id);
 
         if (existingProductType is null)
             return NotFound();
 
-        // Atualize os atributos do tipo de produto com base nos valores fornecidos em 'productType'.
-        // Exemplo: existingProductType.Description = productType.Description;
-
-        await _context.SaveChangesAsync();
-        return Ok();
-    }
-
-    [HttpPatch()]
-    [Route("productType/{name}")]
-    public async Task<ActionResult> UpdateAttributes(int productTypeId, [FromForm] string name)
-    {
-        if (_context is null)
-            return NotFound();
-
-        if (_context.ProductType is null)
-            return NotFound();
-
-        var existingProductType = await _context.ProductType.FindAsync(productTypeId);
-
-        if (existingProductType is null)
-            return NotFound();
-
-        // Atualize os atributos do tipo de produto individualmente com base nos valores fornecidos.
-        existingProductType.Name = name;
+        _context.Entry(productType).State = EntityState.Modified;
 
         await _context.SaveChangesAsync();
         return Ok();
     }
 
     [HttpDelete()]
-    [Route("productType/{name}")]
-    public async Task<ActionResult> Delete(int productTypeId)
+    [Route("productType/{id}")]
+    public async Task<ActionResult> Delete(int id)
     {
         if (_context is null)
             return NotFound();
@@ -101,7 +78,7 @@ public class ProductTypeController : ControllerBase
         if (_context.ProductType is null)
             return NotFound();
 
-        var existingProductType = await _context.ProductType.FindAsync(productTypeId);
+        var existingProductType = await _context.ProductType.FindAsync(id);
 
         if (existingProductType is null)
             return NotFound();

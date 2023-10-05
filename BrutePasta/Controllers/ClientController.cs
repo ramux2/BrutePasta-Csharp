@@ -27,12 +27,12 @@ public class ClientController : ControllerBase
     }
 
     [HttpGet()]
-    [Route("client/{cpf}")]
-    public async Task<ActionResult<Client>> SearchCpf([FromRoute] string cpf)
+    [Route("client/{id}")]
+    public async Task<ActionResult<Client>> SearchCpf([FromRoute] int id)
     {
         if (_context.Client is null)
             return NotFound();
-        var client = await _context.Client.FirstOrDefaultAsync(x => x.Cpf == cpf);
+        var client = await _context.Client.FirstOrDefaultAsync(x => x.Id == id);
         if (client is null)
             return NotFound();
         return client;
@@ -78,8 +78,8 @@ public class ClientController : ControllerBase
 
 
     [HttpDelete()]
-    [Route("client/{cpf}")]
-    public async Task<ActionResult> Delete(string cpf)
+    [Route("client/{id}")]
+    public async Task<ActionResult> Delete(int id)
     {
         if (_context is null) 
             return NotFound();
@@ -87,10 +87,11 @@ public class ClientController : ControllerBase
         if (_context.Client is null)
             return NotFound();
 
-        var clientTemp = await _context.Client.FindAsync(cpf);
+        var clientTemp = await _context.Client.FindAsync(id);
 
         if (clientTemp is null) 
             return NotFound();
+
         _context.Remove(clientTemp);
         await _context.SaveChangesAsync();
         return Ok();
