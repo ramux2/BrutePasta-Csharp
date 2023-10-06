@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lECe7rhG4QgQIM5u3v/lKsTGPuVuy8k2vNvikIsbUyYpcVL8Rh9UmCFnXfkQOORjBe3Ly1foVtYJ+oPKMXf3ww==",
+  "dgSpecHash": "gkNp/4w7oWHSo6q2KTXjnR9JWMTh6xmohimHDMBJZ48ZE2MB4T4TJKonsgEoNoF4P+cmRNcOUF9lTuOtKLbSYw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Guilherme\\Documents\\Projetos\\BrutePasta2.0\\BrutePasta\\BrutePasta.csproj",
+  "projectFilePath": "c:\\Users\\Guilherme\\Documents\\Projetos\\BrutePasta2.0\\BrutePasta\\BrutePasta.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Guilherme\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Guilherme\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\7.0.11\\microsoft.aspnetcore.jsonpatch.7.0.11.nupkg.sha512",
