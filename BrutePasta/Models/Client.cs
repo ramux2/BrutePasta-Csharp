@@ -10,12 +10,7 @@ public class Client
     public ICollection<Address>? Address { get; set; } = new List<Address>(); //Lista de Endereço
     public string PhoneNumber { get; set; }
 
-    public Client()
-    {
-        Cpf = string.Empty;
-        Name = string.Empty;
-        PhoneNumber = string.Empty;
-    }
+    public Client() { }
 
     public Client(string name, string cpf, List<Address>? address, string phoneNumber)
     {

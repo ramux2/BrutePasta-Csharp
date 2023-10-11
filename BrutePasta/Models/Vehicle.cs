@@ -1,6 +1,6 @@
 ﻿using BrutePasta.Models;
 using System.Text.RegularExpressions;
-using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 public class Vehicle
 {
@@ -8,19 +8,9 @@ public class Vehicle
     public string LicensePlate { get; set; }
     public string Brand { get; set; }
     public string Model { get; set; }
+    public int DeliveryManId { get; set; }
+    [JsonIgnore]
     public DeliveryMan? DeliveryMan { get; set; }
-
-    public Vehicle() { }
-
-    // Construtor com parâmetros
-    public Vehicle(int id, string brand, string model, string licensePlate, DeliveryMan deliveryMan)
-    {
-        Id = id;
-        Brand = brand;
-        Model = model;
-        LicensePlate = licensePlate;
-        DeliveryMan = deliveryMan;
-    }
 
     public static bool PlateValidation(string licensePlate)
     {
