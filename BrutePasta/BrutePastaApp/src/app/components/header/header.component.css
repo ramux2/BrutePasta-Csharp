@@ -1,0 +1,57 @@
+header 
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    background-color: var(--background-light);
+    padding: 0px 130px;
+}
+
+.logo-container
+{
+    display: flex;
+    align-items: center;
+}
+
+h1 
+{
+    font-family: Praise;
+    color: var(--brute-red);
+    text-shadow: var(--yellow-pasta) 1px 0px;
+    font-size: 48px;
+    margin-left: 24px;
+}
+
+ul
+{
+    display: flex;
+    align-items: center;
+    gap: 48px;
+}
+
+li
+{
+    font-size: 20px;
+    display: flex;
+    color: var(--dark-john);
+}
+
+button
+{
+    height: 46px;
+    width: 140px;
+    background-color: var(--brute-red);
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.button-log-in
+{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
