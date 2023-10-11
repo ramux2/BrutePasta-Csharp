@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Praise&display=swap');
+
+
+.ff-poppins { font-family: 'Poppins', sans-serif; }
+.ff-praise {font-family: 'Praise', cursive;}
+
+* 
+{
+    font-family: 'Poppins';
+    margin: 0;
+    padding: 0;
+  }
+
+:root 
+{
+    --brute-red: #B13E2B;
+    --yellow-pasta: #F2BC57;
+    --dark-bege: #FEE7B3;
+    --light-olive: #7A8C51;
+    --dark-john: #3B282A;
+    --dark-olive: #657346;
+    --background-light: #FCFCFC;
+    --light-red: #CD4233;
+  }
