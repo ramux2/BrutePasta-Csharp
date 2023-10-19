@@ -9,7 +9,6 @@ public class Vehicle
     public string Brand { get; set; }
     public string Model { get; set; }
     public int DeliveryManId { get; set; }
-    [JsonIgnore]
     public DeliveryMan? DeliveryMan { get; set; }
 
     public static bool PlateValidation(string licensePlate)

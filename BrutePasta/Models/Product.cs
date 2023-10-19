@@ -10,6 +10,5 @@ public class Product
     public float Price { get; set; }
     public string Description { get; set; }
     public int ProductId { get; set; }
-    [JsonIgnore]
     public ProductType ProductType { get; set; }
 }
