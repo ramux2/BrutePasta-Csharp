@@ -5,8 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { ProductComponent } from './components/product/product.component';
-import { GetProductComponent } from './components/get-product/get-product.component';
+import { ProductComponent } from './components/products/product/product.component';
+import { GetProductsComponent } from './components/products/get-products/get-products.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +14,7 @@ import { GetProductComponent } from './components/get-product/get-product.compon
     HeaderComponent,
     FooterComponent,
     ProductComponent,
-    GetProductComponent,
+    GetProductsComponent
   ],
   imports: [
     BrowserModule,

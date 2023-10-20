@@ -144,3 +144,10 @@ C:\Users\Guilherme\Documents\Projetos\BrutePasta2.0\BrutePasta\bin\Debug\net7.0\
 C:\Users\Guilherme\Documents\Projetos\BrutePasta2.0\BrutePasta\bin\Debug\net7.0\BrutePastaApp\tsconfig.app.json
 C:\Users\Guilherme\Documents\Projetos\BrutePasta2.0\BrutePasta\bin\Debug\net7.0\BrutePastaApp\tsconfig.json
 C:\Users\Guilherme\Documents\Projetos\BrutePasta2.0\BrutePasta\bin\Debug\net7.0\BrutePastaApp\tsconfig.spec.json
+C:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Csharp\BrutePasta\bin\Debug\net7.0\BrutePastaApp\angular.json
+C:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Csharp\BrutePasta\bin\Debug\net7.0\BrutePastaApp\package-lock.json
+C:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Csharp\BrutePasta\bin\Debug\net7.0\BrutePastaApp\package.json
+C:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Csharp\BrutePasta\bin\Debug\net7.0\BrutePastaApp\tsconfig.app.json
+C:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Csharp\BrutePasta\bin\Debug\net7.0\BrutePastaApp\tsconfig.json
+C:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Csharp\BrutePasta\bin\Debug\net7.0\BrutePastaApp\tsconfig.spec.json
+C:\Users\A477016\OneDrive - Volvo Group\Faculdade\Dev. Software\BrutePasta-Csharp\BrutePasta\bin\Debug\net7.0\Microsoft.AspNetCore.JsonPatch.dll
