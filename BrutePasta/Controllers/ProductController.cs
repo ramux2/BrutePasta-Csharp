@@ -21,10 +21,16 @@ namespace BrutePasta.Controllers
         [Route("products")]
         public async Task<ActionResult<IEnumerable<Product>>> Get()
         {
-            if (_context.Product is null)
+            var products = await _context.Product
+                .Include(p => p.ProductType)
+                .ToListAsync();
+
+            if (products is null)
                 return NotFound();
-            return await _context.Product.ToListAsync();
+
+            return products;
         }
+
 
         [HttpPost]
         [Route("product")]

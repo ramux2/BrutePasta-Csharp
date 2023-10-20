@@ -1,9 +1,9 @@
 <section class="product-card">
     <img src="../../../../assets/images/png/3-35083_pepperoni-pizza-slice-png-pepperoni-pizza-transparent-background 1.png" alt="">
     <div class="information">
-        <h2>Nome Produto</h2>
+        <h2>{{ product.name }}</h2>
         <p class="description">Descrição</p>
-        <p class="price">$ 13.99</p>
+        <p class="price">$ {{ product.price }}</p>
     </div>
     <button class="product-button">Adicionar</button>
 </section>
