@@ -8,6 +8,11 @@ header
     padding: 0px 130px;
 }
 
+.active{
+    color: var(--brute-red);
+    transition: 100ms ease-in;
+}
+
 .logo-container
 {
     display: flex;
@@ -54,4 +59,9 @@ button
     flex-direction: column;
     gap: 12px;
     align-items: center;
+}
+
+li:hover 
+{
+    color: var(--brute-red);
 }
