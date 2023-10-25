@@ -1,16 +1,186 @@
-h1.title-page 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+.gradient-vector {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 36%;
+    background: linear-gradient(132deg, #B6260E 0%, #DC6153 100%);
+    z-index: -1;
+  }
+
+h1.page-title 
 {
+    display: flex;
+    width: 228px;
+    height: 80px;
+    align-items: center;
     font-family: Praise;
     color: var(--brute-red);
     text-shadow: var(--yellow-pasta) 1px 0px;
     font-size: 48px;
-    margin-left: 64px;
+    margin-left: 4%;
+    cursor: pointer;
 }
 
-.title-login
+.main-title-login
 {
-    margin: 152px 0px 16px 60px;
     font-size: 48px;
     font-weight: 700;
     color: #3f3f3f;
+}
+
+p.p-top-content
+{
+    font-size: 16px;
+    margin-bottom: 24px;
+}
+
+.login-hr
+{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+hr
+{
+    width: 164px;
+    height: 2px;
+    background-color: #3f3f3f;
+    border-width: 0;
+}
+
+.main-content 
+{
+  display: flex;
+  justify-content: space-between;
+  margin-left: 10%;
+  flex-direction: row;
+  align-items: center;
+}
+
+ul
+{
+    display: flex;
+    gap: 12px;
+}
+
+ul li
+{
+    list-style: none;
+}
+
+.main-content-logo{
+  height: 600px;
+  margin-right: 15%;
+}
+
+form
+{
+    display: flex;
+    flex-direction: column;
+}
+
+input
+{
+    width: 372px;
+    height: 60px;
+    padding-left: 20px;
+    border-radius: 5px;
+    border: 3px solid var(--brute-red);
+    margin: 8px 0px 8px 0px;
+    font-size: 16px;
+}
+
+input::placeholder
+{
+    color: var(--brute-red);
+}
+
+button
+{
+    height: 46px;
+    width: 140px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #ffffff;
+    margin: 12px 0px 12px 0px;
+    cursor: pointer;
+}
+
+button:active
+{
+    transform: translateY(0.2rem);
+}
+
+button.login
+{
+    background-color: var(--brute-red);
+}
+
+button.register
+{
+    background-color: var(--light-olive);
+}
+
+button.login:hover
+{
+    background-color: transparent;
+    color: var(--brute-red);
+    border: 2px solid var(--brute-red);
+    
+}
+
+button.register:hover
+{
+    background-color: transparent;
+    color: var(--light-olive);
+    border: 2px solid var(--light-olive);
+}
+
+.second-content
+{
+    width: 548px;
+    margin-left: 10%; 
+}
+
+.title-second-content
+{
+    color: #3F3F3F;
+    font-family: Poppins;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+span
+{
+    color: var(--brute-red);
+}
+
+.text-second-content
+{
+    margin-top: 8px;
+}
+
+button.button-footer
+{
+    margin-top: 32px;
+    background-color: var(--brute-red);
+}
+
+button.button-footer:hover
+{
+    background-color: transparent;
+    color: var(--brute-red);
+    border: 2px solid var(--brute-red);
 }

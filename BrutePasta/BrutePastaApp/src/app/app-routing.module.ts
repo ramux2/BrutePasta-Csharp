@@ -8,6 +8,11 @@ import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
 	{
+		path: '',
+		redirectTo: 'Home',
+		pathMatch: 'full'
+	},
+	{
 		path: 'Home',
 		component: HomeComponent
 	},
