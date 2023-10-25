@@ -53,13 +53,6 @@ button
     color: #ffffff;
 }
 
-.button-log-in
-{
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    align-items: center;
-}
 
 li:hover 
 {
