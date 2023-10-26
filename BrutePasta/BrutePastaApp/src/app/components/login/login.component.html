@@ -21,10 +21,10 @@
                 <p>OU</p>
                 <hr>
             </div>
-            <form action="">    
-                <input type="text" required placeholder="Email"> 
-                <input type="password" required placeholder="Senha">
-                <button class="login" type="submit">Entrar</button>
+            <form [formGroup]="loginForm">    
+                <input formControlName="email" type="email" required placeholder="Email"> 
+                <input formControlName="password" type="password" required placeholder="Senha">
+                <button (click)="login()" class="login" type="submit">Entrar</button>
                 <button routerLink="/Register" class="register" type="submit">Registrar-se</button>
             </form>
         </div>
