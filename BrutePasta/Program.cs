@@ -10,7 +10,7 @@ string mySqlConnection = builder.Configuration.GetConnectionString("DefaultConne
 
 builder.Services.AddDbContext<BrutePastaDbContext>(options => options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
 
-builder.Services.AddAuthentication(option =>);
+//builder.Services.AddAuthentication(option =>);
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
