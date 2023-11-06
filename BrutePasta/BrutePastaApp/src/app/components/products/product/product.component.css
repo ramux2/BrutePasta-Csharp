@@ -58,3 +58,15 @@ button
     color: #ffffff;
     margin: 20px;
 }
+
+button:active
+{
+    transform: translateY(0.2rem);
+}
+
+button:hover
+{
+    background-color: transparent;
+    color: var(--brute-red);
+    border: 2px solid var(--brute-red);
+}

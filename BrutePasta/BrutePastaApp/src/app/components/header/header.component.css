@@ -58,3 +58,13 @@ li:hover
 {
     color: var(--brute-red);
 }
+
+li.active img 
+{
+    content: url('../../../assets/images/png/shopping-cart-red.png');
+}
+
+li:hover img 
+{
+    content: url('../../../assets/images/png/shopping-cart-red.png');
+}
