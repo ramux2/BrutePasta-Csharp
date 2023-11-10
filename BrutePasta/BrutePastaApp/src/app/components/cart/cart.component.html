@@ -1,12 +1,15 @@
 <app-header></app-header>
 <div *ngFor="let item of cartItems">
     <p>{{ item.product.name }}</p>
+    <p>Preço unitário: {{ item.product.price }}</p>
     <p>Quantidade: {{ item.quantity }}</p>
-    <!-- /*<p>Subtotal: {{ item.calculateSubtotal() | currency }}</p>*/ -->
+    <p>Subtotal: {{ calculateSubtotal(item) | currency }}</p>
     <button (click)="removeItem(item)">Remover do Carrinho</button>
+    <button (click)="removeAll(item)">X</button>
 </div>
   
-  <!-- <p>Total do Carrinho: {{ calculateTotal() | currency }}</p> -->
+  <p>Taxa de entrega: $20.00</p>
+  <p>Total do Carrinho: {{ calculateTotal() | currency }}</p>
+  <button (click)="clearCart()">Limpar Carrinho</button>
   
-  <!-- Adicione um botão para finalizar o pedido -->
-  <!-- <button (click)="finalizeOrder()">Finalizar Pedido</button> -->
+  <button (click)="finalizeOrder()">Finalizar Pedido</button>
