@@ -136,7 +136,6 @@ button.login:hover
     background-color: transparent;
     color: var(--brute-red);
     border: 2px solid var(--brute-red);
-    
 }
 
 button.register:hover

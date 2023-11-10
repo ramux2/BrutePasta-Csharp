@@ -19,12 +19,10 @@ export class ProductComponent implements OnInit {
 
   addToCart(product: Product) {
     const item: Item = {
-      id: 0,
       quantity: 1,
       product: product
     };
 
     this.cartService.addToCart(item);
-    console.log("Produto adicionado" + item.product.name)
   }
 }
