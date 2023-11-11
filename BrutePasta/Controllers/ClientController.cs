@@ -1,7 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using BrutePasta.Models;
 using BrutePasta.Data;
+using BrutePasta.Helpers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace BrutePasta.Controllers;
 
@@ -15,6 +21,50 @@ public class ClientController : ControllerBase
     {
         _logger = logger;
         _context = context;
+    }
+
+    [HttpPost]
+    [Route("authenticate")]
+    public async Task<ActionResult<Client>> Authenticate(Client clientObj)
+    {
+        if (clientObj == null)
+            return BadRequest();
+
+        var client = await _context.Client.FirstOrDefaultAsync(x => x.Email == clientObj.Email);
+
+        if (client == null)
+            return NotFound("Cliente não encontrado");
+
+        if (!PasswordHasher.VerifyPassword(clientObj.Password, client.Password))
+            return BadRequest("Senha Incorreta");
+
+        var token = CreateJwt(client);
+
+        return Ok(new { token });
+    }
+
+    [HttpPost]
+    [Route("register")]
+    public async Task<ActionResult<Client>> Register(Client clientObj)
+    {
+        if (clientObj == null)
+            return BadRequest();
+
+        var email = await _context.Client.FirstOrDefaultAsync(x => x.Email == clientObj.Email);
+        var cpf = await _context.Client.FirstOrDefaultAsync(x => x.Cpf == clientObj.Cpf);
+
+        if (email != null)
+            return BadRequest("Email ja cadastrado");
+
+        if (cpf != null)
+            return BadRequest("CPF Ja cadastrado");
+
+        clientObj.Password = PasswordHasher.HashPassword(clientObj.Password);
+
+        await _context.Client.AddAsync(clientObj);
+        await _context.SaveChangesAsync();
+
+        return Created("Usuario criado", clientObj);
     }
 
     [HttpGet()]
@@ -36,19 +86,6 @@ public class ClientController : ControllerBase
         if (client is null)
             return NotFound();
         return client;
-    }
-
-    [HttpPost]
-    [Route("client")]
-    public async Task<ActionResult<Client>> Insert(Client client)
-    {
-        if (!Client.IsCpf(client.Cpf))
-            return BadRequest("CPF inválido!");
-
-        _context.Client.Add(client);
-        await _context.SaveChangesAsync();
-
-        return Created("", client);
     }
 
     [HttpPut()]
@@ -96,4 +133,30 @@ public class ClientController : ControllerBase
         await _context.SaveChangesAsync();
         return Ok();
     }
+
+    private string CreateJwt(Client client)
+    {
+        var jwtTokenHandler = new JwtSecurityTokenHandler();
+        var key = Encoding.ASCII.GetBytes("B4GSg^]]7g~ep7%*3Xob;dqM(Xlcy$");
+        var identity = new ClaimsIdentity(new Claim[]
+        {
+        new Claim(ClaimTypes.Name, $"{client.Email}")
+        });
+
+        var credentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
+
+        var expirationTime = DateTime.Now.AddMinutes(30);
+        var notbefore = DateTime.Now;
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = identity,
+            Expires = expirationTime,
+            NotBefore = notbefore,
+            SigningCredentials = credentials
+        };
+
+        var token = jwtTokenHandler.CreateToken(tokenDescriptor);
+        return jwtTokenHandler.WriteToken(token);
+    }
+
 }
