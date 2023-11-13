@@ -50,6 +50,9 @@ public class ClientController : ControllerBase
         if (clientObj == null)
             return BadRequest();
 
+        if (!Client.IsCpf(clientObj.Cpf))
+            return BadRequest("CPF inválido!");
+
         var email = await _context.Client.FirstOrDefaultAsync(x => x.Email == clientObj.Email);
         var cpf = await _context.Client.FirstOrDefaultAsync(x => x.Cpf == clientObj.Cpf);
 

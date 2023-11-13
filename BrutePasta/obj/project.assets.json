@@ -3311,19 +3311,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\A477016\\.nuget\\packages\\": {}
+    "C:\\Users\\Uniban\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\A477016\\OneDrive - Volvo Group\\Faculdade\\Dev. Software\\BrutePasta-Csharp\\BrutePasta\\BrutePasta.csproj",
+      "projectUniqueName": "C:\\Users\\Uniban\\OneDrive\\Documentos\\GitHub\\BrutePasta-Csharp\\BrutePasta\\BrutePasta.csproj",
       "projectName": "BrutePasta",
-      "projectPath": "C:\\Users\\A477016\\OneDrive - Volvo Group\\Faculdade\\Dev. Software\\BrutePasta-Csharp\\BrutePasta\\BrutePasta.csproj",
-      "packagesPath": "C:\\Users\\A477016\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\A477016\\OneDrive - Volvo Group\\Faculdade\\Dev. Software\\BrutePasta-Csharp\\BrutePasta\\obj\\",
+      "projectPath": "C:\\Users\\Uniban\\OneDrive\\Documentos\\GitHub\\BrutePasta-Csharp\\BrutePasta\\BrutePasta.csproj",
+      "packagesPath": "C:\\Users\\Uniban\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Uniban\\OneDrive\\Documentos\\GitHub\\BrutePasta-Csharp\\BrutePasta\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\A477016\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Uniban\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3429,7 +3429,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
       }
     }
   }
