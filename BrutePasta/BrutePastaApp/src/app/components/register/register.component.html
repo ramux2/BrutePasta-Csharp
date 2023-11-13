@@ -1,1 +1,37 @@
-<p>register works!</p>
+<body>
+      <header class="header-login">
+        <h1 routerLink="/Home" class="page-title">Brute Pasta</h1>
+      </header>
+    
+      <main>
+          <section class="main-content">
+            <div class="logo-title-content">
+                <h1 class="main-title-register">Registre-se e faça parte da <span>Brute Pasta</span></h1>
+                <img routerLink="/Home" class="main-content-logo" src="../../../assets/images/svg/logo-register-brutepasta.svg" alt="Logo Brute Pasta">
+            </div>
+          <div class="forms-content">
+            <p class="p-top-content">Cadastre-se por meio de suas redes sociais</p>
+            <nav>
+                <ul>
+                    <li><img src="../../../assets/images/svg/linkedin-logo.svg" alt=""></li>
+                    <li><img src="../../../assets/images/svg/instagram-logo.svg" alt=""></li>
+                </ul>
+            </nav>
+            <div class="login-division">
+                <div class="login-hr">    
+                    <hr>
+                    <p>OU</p>
+                    <hr>
+                </div>
+                <form>    
+                    <input formControlName="email" type="email" required placeholder="Email"> 
+                    <input formControlName="password" type="password" required placeholder="Senha">
+                    <button class="login" type="submit">Entrar</button>
+                    <button routerLink="/Register" class="register" type="submit">Registrar-se</button>
+                </form>
+            </div>
+          </div>
+        </section>
+        <app-footer></app-footer>
+      </main>
+    </body>
