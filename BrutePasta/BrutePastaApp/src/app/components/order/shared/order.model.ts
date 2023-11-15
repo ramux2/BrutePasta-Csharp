@@ -1,3 +1,4 @@
+import { Client } from "../../shared/client.model";
 import { Item } from "../../shared/item.model";
 
 export interface Order {
@@ -14,15 +15,6 @@ interface Payment {
 interface PaymentMethod {
     id: number,
     name: string,
-}
-
-interface Client {
-    id: number,
-    cpf: string,
-    name: string,
-    email: string,
-    password: string,
-    phoneNumber: string
 }
 
 interface DeliveryMan {
