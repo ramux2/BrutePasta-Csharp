@@ -24,17 +24,19 @@
             <p>OU</p>
             <hr>
           </div>
-          <form>
+          <form [formGroup]="registerForm">
             <input formControlName="name" type="text" required placeholder="Nome">
             <input formControlName="email" type="email" required placeholder="E-mail">
             <input formControlName="cpf" type="text" required placeholder="CPF">
             <input formControlName="password" type="password" required placeholder="Senha">
-            <input type="password" required placeholder="Confirmar Senha">
-            <button class="login" type="submit">Confirmar</button>
+            <input formControlName="phoneNumber" type="text" required placeholder="Número de telefone">
+            <button (click)="register()" class="login" type="submit">Confirmar</button>
           </form>
         </div>
       </div>
     </section>
-    <app-footer></app-footer>
   </main>
+  <footer>
+    <app-footer class="footer-bottom"></app-footer>
+  </footer>
 </body>

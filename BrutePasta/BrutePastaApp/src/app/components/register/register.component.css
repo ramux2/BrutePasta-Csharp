@@ -6,6 +6,11 @@
     background-color: var(--light-bege);
   }
   
+body
+{
+    min-height: 100vh;
+}
+
 h1.page-title
 {
       display: flex;
@@ -92,7 +97,7 @@ h1.page-title
   {
       width: 372px;
       height: 60px;
-      padding-left: 20px;
+      padding: 0px 10px 0px 20px;
       border-radius: 5px;
       border: 3px solid var(--brute-red);
       margin: 8px 0px 8px 0px;
@@ -182,4 +187,11 @@ h1.page-title
       background-color: transparent;
       color: var(--brute-red);
       border: 2px solid var(--brute-red);
+  }
+
+  .footer-bottom
+  {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
   }
