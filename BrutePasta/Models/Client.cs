@@ -6,13 +6,13 @@ namespace BrutePasta.Models;
 public class Client
 {
     public int Id { get; set; }
-    public string Cpf { get; set; }
-    public string Name { get; set; }
-    public string Email { get; set; }
-    public string Password { get; set; }
+    public string? Cpf { get; set; }
+    public string? Name { get; set; }
+    public string? Email { get; set; }
+    public string? Password { get; set; }
     [JsonIgnore]
     public ICollection<Address>? Address { get; set; } = new List<Address>(); //Lista de Endereço
-    public string PhoneNumber { get; set; }
+    public string? PhoneNumber { get; set; }
 
     public Client() { }
 

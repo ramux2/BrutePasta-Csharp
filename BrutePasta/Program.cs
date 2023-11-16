@@ -1,5 +1,9 @@
 using BrutePasta.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -10,7 +14,22 @@ string mySqlConnection = builder.Configuration.GetConnectionString("DefaultConne
 
 builder.Services.AddDbContext<BrutePastaDbContext>(options => options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
 
-//builder.Services.AddAuthentication(option =>);
+builder.Services.AddAuthentication(option =>
+{
+    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(option =>
+{
+    option.RequireHttpsMetadata = false;
+    option.SaveToken = true;
+    option.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("B4GSg^]]7g~ep7%*3Xob;dqM(Xlcy$")),
+        ValidateAudience = false,
+        ValidateIssuer = false
+    };
+});
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
@@ -20,6 +39,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseHttpsRedirection();
 app.UseCors(opcoes => opcoes.AllowAnyOrigin().AllowAnyHeader());
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
