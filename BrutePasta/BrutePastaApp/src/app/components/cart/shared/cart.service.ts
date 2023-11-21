@@ -3,6 +3,9 @@ import { Item } from '../../shared/item.model';
 import { Order } from '../../order/shared/order.model';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { OrderService } from '../../order/shared/order.service';
+import { UserService } from '../../user/shared/user.service';
+import { Client } from '../../shared/client.model';
+import { switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,9 +15,8 @@ export class CartService {
   cartItems: Item[] = [];
   cpfForm!: FormGroup;
   formBuilder!: FormBuilder;
-  
 
-  constructor( private orderService: OrderService) {
+  constructor( private orderService: OrderService, private userStore: UserService) {
     // Carregue os itens do carrinho do localStorage no construtor
     const storedCart = localStorage.getItem('cartItems');
 
@@ -79,36 +81,58 @@ export class CartService {
     localStorage.setItem('cartItems', JSON.stringify(this.cartItems));
   }
 
+  getClient() {
+    const email = this.userStore.getEmailFromStore();
+    email.subscribe((email: string) => {
+      this.userStore.getUser(email).subscribe((client: Client) => {
+        console.log("Retorno Client", client)
+      })
+    })
+  }
+
   finalizeOrder() {
-    const order: Order = {
-      items: this.getCart(),
-      payment: {
-        paymentMethod: {
-          id: 1, // Defina o método de pagamento desejado
-          name: ''
-        },
+    this.userStore.getEmailFromStore().pipe(
+      switchMap((email: string) => {
+        return this.userStore.getUser(email);
+      }),
+      switchMap((client: Client) => {
+        console.log("Objeto cliente:", client)
+        const order: Order = {
+          items: this.getCart(),
+          payment: {
+            paymentMethod: {
+              id: 1, // Defina o método de pagamento desejado
+              name: ''
+            },
+          },
+          client: {
+            id: client.id,
+            cpf: client.cpf,
+            name: client.name,
+            email: client.email,
+            password: client.password,
+            phoneNumber: client.phoneNumber
+          },
+          deliveryMan: {
+            id: 0,
+            cpf: '',
+            name: '',
+            orderTax: 0
+          }
+        };
+        console.log(order);
+        return this.orderService.createOrder(order);
+      })
+    ).subscribe(
+      (response) => {
+        console.log("Deu boa caralho");
+        this.clearCart();
+        // this.router.navigate(['/confirmation-page']);
       },
-      client: {
-        id: 2, // Defina o cliente ou outras informações necessárias
-        cpf: '',
-        name: '',
-        email: '',
-        password: '',
-        phoneNumber: ''
-      },
-      deliveryMan: {
-        id: 0,
-        cpf: '',
-        name: '',
-        orderTax: 0
+      error => {
+        console.error("Erro ao finalizar pedido:", error);
       }
-    }
-    console.log(order);
-    this.orderService.createOrder(order).subscribe((response) => {
-      console.log("Deu boa caralho")
-      this.clearCart();
-      // this.router.navigate(['/confirmation-page']);
-    });
+    );
     this.clearCart();
     localStorage.removeItem('cartItems');
   }

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AutenticationService } from './shared/autentication.service';
 import { Router } from '@angular/router';
 import ValidateForm from '../shared/validationForm';
+import { UserService } from '../user/shared/user.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ import ValidateForm from '../shared/validationForm';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private loginService: AutenticationService, private route: Router) {}
+  constructor(private formBuilder: FormBuilder, private loginService: AutenticationService, private route: Router, private userStore: UserService) {}
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
@@ -23,13 +24,18 @@ export class LoginComponent implements OnInit {
 
   login() {
     if (this.loginForm.valid) {
-      console.log('Registrado com sucesso', this.loginForm.value);
+      console.log('Autenticado com sucesso', this.loginForm.value);
       const clientObj : any = this.loginForm.value;
 
       this.loginService.autenticate(clientObj).subscribe((response) => {
         this.loginForm.reset();
-        this.loginService.storeToken(response.token)
-        this.route.navigate(['Products'])
+        console.log("Token do response", response.token)
+        this.loginService.storeToken(response.token);
+        console.log("Token descriptado", this.loginService.decodedToken());
+        const tokenPayload = this.loginService.decodedToken();
+        this.userStore.setEmailForStore(tokenPayload.unique_name);
+        console.log("Email:", tokenPayload.unique_name)
+        this.route.navigate(['Products']);
       })
     } else {
       ValidateForm.validateAllFormFields(this.loginForm);

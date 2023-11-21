@@ -6,6 +6,6 @@
     "\\BrutePasta\\Data",
     "\\BrutePasta\\Models"
   ],
-  "SelectedNode": "\\BrutePasta\\Program.cs",
+  "SelectedNode": "\\BrutePasta\\Controllers\\ClientController.cs",
   "PreviewInSolutionExplorer": false
 }

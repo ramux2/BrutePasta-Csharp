@@ -80,12 +80,12 @@ public class ClientController : ControllerBase
     }
 
     [HttpGet()]
-    [Route("client/{id}")]
-    public async Task<ActionResult<Client>> SearchCpf([FromRoute] int id)
+    [Route("client/{email}")]
+    public async Task<ActionResult<Client>> SearchCpf([FromRoute] string email)
     {
         if (_context.Client is null)
             return NotFound();
-        var client = await _context.Client.FirstOrDefaultAsync(x => x.Id == id);
+        var client = await _context.Client.FirstOrDefaultAsync(x => x.Email == email);
         if (client is null)
             return NotFound();
         return client;

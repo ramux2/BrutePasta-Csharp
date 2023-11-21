@@ -15,6 +15,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CartComponent } from './components/cart/cart.component';
 import { OrderComponent } from './components/order/order.component';
+import { UserComponent } from './components/user/user.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { OrderComponent } from './components/order/order.component';
     LoginComponent,
     RegisterComponent,
     CartComponent,
-    OrderComponent
+    OrderComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
