@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Security.Cryptography;
+using BrutePasta.Interfaces;
 
 namespace BrutePasta.Controllers;
 
@@ -15,22 +16,18 @@ namespace BrutePasta.Controllers;
 [Route("[controller]")]
 public class ClientController : ControllerBase
 {
-    private BrutePastaDbContext _context;
-    private readonly ILogger<ClientController> _logger;
-    public ClientController(BrutePastaDbContext context, ILogger<ClientController> logger)
+    private readonly IClientRepository _clientRepository;
+
+    public ClientController(IClientRepository clientRepository)
     {
-        _logger = logger;
-        _context = context;
+        _clientRepository = clientRepository;
     }
 
     [HttpPost]
     [Route("authenticate")]
     public async Task<ActionResult<Client>> Authenticate(Client clientObj)
     {
-        if (clientObj == null)
-            return BadRequest();
-
-        var client = await _context.Client.FirstOrDefaultAsync(x => x.Email == clientObj.Email);
+        var client = await _clientRepository.GetClientByEmail(clientObj.Email);
 
         if (client == null)
             return NotFound("Cliente não encontrado");
@@ -47,14 +44,11 @@ public class ClientController : ControllerBase
     [Route("register")]
     public async Task<ActionResult<Client>> Register(Client clientObj)
     {
-        if (clientObj == null)
-            return BadRequest();
-
         if (!Client.IsCpf(clientObj.Cpf))
             return BadRequest("CPF inválido!");
 
-        var email = await _context.Client.FirstOrDefaultAsync(x => x.Email == clientObj.Email);
-        var cpf = await _context.Client.FirstOrDefaultAsync(x => x.Cpf == clientObj.Cpf);
+        var email = await _clientRepository.GetClientByEmail(clientObj.Email);
+        var cpf = await _clientRepository.GetClientByCpf(clientObj.Cpf);
 
         if (email != null)
             return BadRequest("Email ja cadastrado");
@@ -64,30 +58,20 @@ public class ClientController : ControllerBase
 
         clientObj.Password = PasswordHasher.HashPassword(clientObj.Password);
 
-        await _context.Client.AddAsync(clientObj);
-        await _context.SaveChangesAsync();
+        await _clientRepository.Create(clientObj);
 
         return Created("Usuario criado", clientObj);
-    }
-
-    [HttpGet()]
-    [Route("clients")]
-    public async Task<ActionResult<IEnumerable<Client>>> Get()
-    {
-        if (_context.Client is null)
-            return NotFound();
-        return await _context.Client.ToListAsync();
     }
 
     [HttpGet()]
     [Route("client/{id}")]
     public async Task<ActionResult<Client>> SearchCpf([FromRoute] int id)
     {
-        if (_context.Client is null)
-            return NotFound();
-        var client = await _context.Client.FirstOrDefaultAsync(x => x.Id == id);
+        var client = await _clientRepository.GetClientById(id);
+
         if (client is null)
-            return NotFound();
+            return NotFound("Cliente não encontrado");
+
         return client;
     }
 
@@ -95,24 +79,11 @@ public class ClientController : ControllerBase
     [Route("client")]
     public async Task<ActionResult> Change(Client client)
     {
-        if (_context is null)
-            return NotFound();
+        if (client is null)
+            return BadRequest("Dados inválidos");
 
-        if (_context.Client is null)
-            return NotFound();
+        _clientRepository.Update(client);
 
-        // Carregue o cliente existente do banco de dados com o mesmo CPF
-        var existingClient = await _context.Client.AsNoTracking().FirstOrDefaultAsync(x => x.Id == client.Id);
-
-        if (existingClient is null)
-            return NotFound();
-
-        if (!Client.IsCpf(existingClient.Cpf))
-            return BadRequest("CPF inválido!");
-
-        _context.Entry(client).State = EntityState.Modified;
-
-        await _context.SaveChangesAsync();
         return Ok();
     }
 
@@ -121,19 +92,12 @@ public class ClientController : ControllerBase
     [Route("client/{id}")]
     public async Task<ActionResult> Delete(int id)
     {
-        if (_context is null) 
-            return NotFound();
-
-        if (_context.Client is null)
-            return NotFound();
-
-        var clientTemp = await _context.Client.FindAsync(id);
+        var clientTemp = await _clientRepository.GetClientById(id);
 
         if (clientTemp is null) 
-            return NotFound();
+            return NotFound("Cliente não encontrado");
 
-        _context.Remove(clientTemp);
-        await _context.SaveChangesAsync();
+        await _clientRepository.Remove(clientTemp);
         return Ok();
     }
 
@@ -161,5 +125,4 @@ public class ClientController : ControllerBase
         var token = jwtTokenHandler.CreateToken(tokenDescriptor);
         return jwtTokenHandler.WriteToken(token);
     }
-
 }
