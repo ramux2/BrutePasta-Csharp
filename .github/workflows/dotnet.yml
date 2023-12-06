@@ -1,0 +1,45 @@
+name: Brute Pasta
+
+on:
+  push:
+    branches:
+        - main
+        - develop
+        - 'feature/**'
+  pull_request:
+    branches:
+        - main
+        - develop
+        - 'feature/**'
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        dotnet-version: ['7.0.x']
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    # Install the .NET Core workload
+    - name: Install .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+
+    # Restore the application to populate the obj folder with RuntimeIdentifiers
+    - name: Restore the application
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore
+
+    # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: dotnet-results
+        path: Artifacts-${{ matrix.dotnet-version }}
