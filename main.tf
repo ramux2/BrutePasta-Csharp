@@ -16,22 +16,24 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "rg" {
   name     = "BrutePastaDEV-RG"
-  location = "westus2"
+  location = "brazilsouth"
 }
 
-resource "azurerm_service_plan" "brutepasta_service_plan" {
-  name = "brutepasta_service_plan"
-  resource_group_name = azurerm_resource_group.name
-  location = azurerm_resource_group.location
-  sku_name = "F1"
-  os_type = "Windows"
+resource "azurerm_service_plan" "asp" {
+  name                = "brutepasta-service-plan"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  sku_name            = "F1"
+  os_type             = "Windows"
 }
 
-resource "azurerm_windows_web_app" "brutepasta-webapp" {
-  name = "brutepasta-dev"
-  resource_group_name = azurerm_resource_group.name
-  location = azurerm_resource_group.location
-  service_plan_id = azurerm_service_plan.service_plan_id
+resource "azurerm_windows_web_app" "awa" {
+  name                = "brutepasta-dev"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  service_plan_id     = azurerm_service_plan.asp.id
 
-  site_config {}
+  site_config {
+    always_on = false
+  }
 }
