@@ -94,14 +94,12 @@ jobs:
     runs-on: windows-latest
     steps:
         - name: Azure login
-          uses: azure/login@v1
+          uses: Azure/login@v1.5.1
           with:
-            client-id: ${{ secrets.ARM_CLIENT_ID}}
-            tenant-id: ${{ secrets.ARM_TENANT_ID }}
-            subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+            creds: '{"clientId":"${{ secrets.ARM_CLIENT_ID }}","clientSecret":"${{ secrets.ARM_CLIENT_SECRET }}","subscriptionId":"${{ secrets.ARM_SUBSCRIPTION_ID }}","tenantId":"${{ secrets.ARM_TENANT_ID }}"}'
     
         - name: Azure CLI script
-          uses: azure/CLI@v1
+          uses: Azure/CLI@v1.0.8
           with:
             azcliversion: latest
             inlineScript: |
