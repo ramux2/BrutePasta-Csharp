@@ -1,8 +1,12 @@
 name: Brute Pasta
 
 env:
-  AZURE_WEBAPP_NAME: MY_WEBAPP_NAME
+  AZURE_WEBAPP_NAME: brutepasta-dev
   AZURE_WEBAPP_PACKAGE_PATH: '.'
+
+permissions:
+    id-token: write
+    contents: read
 
 on:
   push:
@@ -77,11 +81,6 @@ jobs:
           id: validate
           run: terraform validate -no-color
         
-        - name: Terraform Plan
-          id: plan
-          run: terraform plan -no-color
-          continue-on-error: true
-        
         - name: Terraform Apply
           run: terraform apply -auto-approve
           env:
@@ -89,6 +88,24 @@ jobs:
             ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
             ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
             ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
+  azure-login:
+    name: Azure Login
+    runs-on: windows-latest
+    steps:
+        - name: Azure login
+          uses: azure/login@v1
+          with:
+            client-id: ${{ secrets.ARM_CLIENT_ID}}
+            tenant-id: ${{ secrets.ARM_TENANT_ID }}
+            subscription-id: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+    
+        - name: Azure CLI script
+          uses: azure/CLI@v1
+          with:
+            azcliversion: latest
+            inlineScript: |
+              az account show
 
   deploy:
     name: Deploy
