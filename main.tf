@@ -6,14 +6,7 @@ terraform {
       version = "~> 3.0.2"
     }
   }
-
-  cloud {
-    organization = "ramux221"
-    workspaces {
-      name = "brutepasta-workspace"
-    }
-  }
-
+  
   required_version = ">= 1.1.0"
 }
 
